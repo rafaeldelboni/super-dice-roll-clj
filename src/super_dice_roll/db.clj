@@ -43,6 +43,7 @@
                         (sql.helpers/where :and
                                            [:= :user_id user-id]
                                            [:= :channel_id channel-id])
+                        (sql.helpers/order-by [:created_at :desc])
                         (sql.helpers/limit 10)
                         sql/format)
         results (components.database/execute db sql-command)]
