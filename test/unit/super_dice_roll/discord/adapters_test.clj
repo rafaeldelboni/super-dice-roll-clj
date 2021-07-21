@@ -50,7 +50,7 @@
 
 (deftest rolled->message-test
   (testing "adapt rolled results into output message"
-    (is (= "*nicola rolled 2d12+5*\n`[4,7] + 5`\n**total: 16**\n"
+    (is (= "*nicola rolled 2d12+5*\n`[4,7] +5`\n**total: 16**\n"
            (adapters/rolled->message {:roll {:command {:user {:id "12345678"
                                                               :username "usernola"
                                                               :nick "nicola"
@@ -62,7 +62,7 @@
                                       :results {:each [4, 7]
                                                 :total 16}}))
         "should show nick and modifier")
-    (is (= "*usernola rolled 2d12+5*\n`[4,7] + 5`\n**total: 16**\n"
+    (is (= "*usernola rolled 2d12+5*\n`[4,7] +5`\n**total: 16**\n"
            (adapters/rolled->message {:roll {:command {:user {:id "12345678"
                                                               :username "usernola"
                                                               :nick ""
@@ -74,6 +74,18 @@
                                       :results {:each [4, 7]
                                                 :total 16}}))
         "should show username and modifier")
+    (is (= "*usernola rolled 2d12-7*\n`[4,7] -7`\n**total: 4**\n"
+           (adapters/rolled->message {:roll {:command {:user {:id "12345678"
+                                                              :username "usernola"
+                                                              :nick ""
+                                                              :channel :discord}
+                                                       :command "2d12-7"}
+                                             :times 2
+                                             :dice 12
+                                             :modifier -7}
+                                      :results {:each [4, 7]
+                                                :total 4}}))
+        "should show username and negative modifier")
     (is (= "*usernola rolled 2d12+5*\n`[4,7]`\n**total: 11**\n"
            (adapters/rolled->message {:roll {:command {:user {:id "12345678"
                                                               :username "usernola"
