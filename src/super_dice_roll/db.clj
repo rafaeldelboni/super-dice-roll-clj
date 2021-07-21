@@ -35,6 +35,7 @@
                                             :user_id
                                             :channel_id
                                             :command
+                                            :modifier
                                             :total
                                             :each
                                             :created_at)

@@ -17,7 +17,9 @@
                            (if rolled
                              (discord.adapters/rolled->message rolled)
                              (discord.adapters/roll-command->error-message roll-cmd)))
-                  "history" "Command not available."
+                  "history" (-> (discord.adapters/wire-in->user body)
+                                (base.controller/get-user-command-history components)
+                                discord.adapters/user-command-history->message)
                   "help" (str messages/help-header "\n"
                               messages/help-roll "\n"
                               messages/help-history))]

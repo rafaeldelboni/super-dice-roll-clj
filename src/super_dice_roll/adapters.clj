@@ -7,11 +7,12 @@
 (s/defn rolled->db-new-roll :- schemas.db/NewRoll
   [{:keys [roll results]} :- schemas.models/Rolled]
   (let [{:keys [id channel]} (get-in roll [:command :user])
-        command (get-in roll [:command :command])
+        {:keys [command modifier]} roll
         {:keys [each total]} results]
     {:rolls/user_id id
      :rolls/channel_id (channel schemas.models/ChannelDefinition)
-     :rolls/command command
+     :rolls/command (:command command)
+     :rolls/modifier modifier
      :rolls/total total
      :rolls/each (json/encode each)}))
 
@@ -19,8 +20,9 @@
   [rolls :- [schemas.db/Roll]
    user :- schemas.models/User]
   {:user user
-   :history (mapv (fn [{:rolls/keys [command total each]}]
+   :history (mapv (fn [{:rolls/keys [command each modifier total]}]
                     {:command command
                      :results {:total total
+                               :modifier modifier
                                :each (-> each (json/decode true) vec)}})
                   rolls)})

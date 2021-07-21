@@ -18,9 +18,9 @@
 (defn- create-and-start-components! []
   (component/start-system
    (component/system-map
-     :config (components.config/new-config)
-     :database (component/using (components.database/new-database)
-                                [:config]))))
+    :config (components.config/new-config)
+    :database (component/using (components.database/new-database)
+                               [:config]))))
 
 (g/generate schemas.models/Rolled)
 
@@ -41,6 +41,7 @@
                         :dice 6
                         :modifier +5}
                  :results {:each [4 1 6 2]
+                           :modifier 5
                            :total 18}}]]
 
     (state/invoke #(db/insert-new-roll! roll database))
@@ -53,7 +54,7 @@
     (flow "check roll was inserted in db this user"
       (match? {:user user
                :history [{:command "4d6+5"
-                          :results {:total 18 :each [4 1 6 2]}}]}
+                          :results {:total 18 :modifier 5 :each [4 1 6 2]}}]}
               (db/get-user-channel-rolls user database)))
 
     (flow "check trigger is work and user has 10 rolls only"
