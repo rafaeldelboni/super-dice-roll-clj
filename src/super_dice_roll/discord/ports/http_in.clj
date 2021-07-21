@@ -31,7 +31,6 @@
   [{{{:keys [type] :as body} :body
      headers :header} :parameters
     components :components}]
-  (logs/log :info {:header headers :body body})
   (case type
     1 {:status 200
        :body {:type 1}}
