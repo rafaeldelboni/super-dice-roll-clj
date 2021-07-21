@@ -9,6 +9,8 @@ Discord ~~and Telegram~~ bot that roll dices using using commands like `/roll 4d
 - `/roll`    Roll dices. Example: `/roll 3D6+3`.
 - `/history` Lists your lasts 10 rolls with the results.
 
+![sarue](super-roll-bot.png)
+
 # Developers
 
 ## About this code
