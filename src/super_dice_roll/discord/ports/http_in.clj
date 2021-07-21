@@ -1,6 +1,5 @@
 (ns super-dice-roll.discord.ports.http-in
-  (:require [parenthesin.logs :as logs]
-            [schema.core :as s]
+  (:require [schema.core :as s]
             [super-dice-roll.controllers :as base.controller]
             [super-dice-roll.discord.adapters :as discord.adapters]
             [super-dice-roll.discord.schemas.http-in :as discord.schemas.http-in]
@@ -28,8 +27,7 @@
             :data {:content content}}}))
 
 (defn process-interaction!
-  [{{{:keys [type] :as body} :body
-     headers :header} :parameters
+  [{{{:keys [type] :as body} :body} :parameters
     components :components}]
   (case type
     1 {:status 200

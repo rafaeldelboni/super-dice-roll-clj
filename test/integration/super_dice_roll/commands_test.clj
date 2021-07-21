@@ -75,7 +75,9 @@
                                                               :username "papoulos"}}
                                               :data {:id "discord-data-id-1"
                                                      :type 1
-                                                     :name "history"}}})))
+                                                     :name "history"}}})
+              {:times-to-try 5
+               :sleep-time   200}))
 
     (flow "should be able to send a /help command"
       (match? (matchers/embeds {:status 200
