@@ -6,6 +6,7 @@
                     :rolls/user_id s/Str
                     :rolls/channel_id s/Int
                     :rolls/command s/Str
+                    :rolls/modifier s/Int
                     :rolls/total s/Int
                     :rolls/each schemas.types/JsonArrayInt
                     :rolls/created_at s/Inst})
@@ -14,6 +15,7 @@
   (select-keys roll-skeleton  [:rolls/user_id
                                :rolls/channel_id
                                :rolls/command
+                               :rolls/modifier
                                :rolls/total
                                :rolls/each]))
 

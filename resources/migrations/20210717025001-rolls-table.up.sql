@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS rolls (
     user_id TEXT,
     channel_id INTEGER,
     command TEXT,
+    modifier INTEGER,
     total INTEGER,
     each JSON,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP

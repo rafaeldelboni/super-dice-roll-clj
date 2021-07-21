@@ -26,6 +26,7 @@
 
 (s/defschema Results
   {:each EachResult
+   :modifier s/Int
    :total s/Int})
 
 (s/defschema Rolled

@@ -13,8 +13,9 @@
   (let [results (mapv (fn [_] (rand-int-range 1 (inc dice)))
                       (range 0 times))]
     {:roll roll
-     :results {:each  results
-               :total (-> (reduce + results) (+ modifier))}}))
+     :results {:each     results
+               :modifier modifier
+               :total    (-> (reduce + results) (+ modifier))}}))
 
 (s/defn do-roll! :- (s/maybe schemas.models/Rolled)
   [roll-command :- schemas.models/RollCommand
@@ -24,3 +25,8 @@
       (let [rolled (roll->rolled roll)]
         (future (base.db/insert-new-roll! rolled database))
         rolled))))
+
+(s/defn get-user-command-history :- schemas.models/UserCommandHistory
+  [user :- schemas.models/User
+   {:keys [database]} :- schemas.types/Components]
+  (base.db/get-user-channel-rolls user database))

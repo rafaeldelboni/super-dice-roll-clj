@@ -63,7 +63,7 @@
     (flow "should be able to send a /history command"
       (match? (matchers/embeds {:status 200
                                 :body  {:type 4
-                                        :data {:content "Command not available."}}})
+                                        :data {:content (matchers/regex #"\*papoulos history\*\n`4d6-1: \[")}}})
               (util/signed-request! {:method :post
                                      :uri    "/discord/webhook"
                                      :body   {:id "discord-id-1"
