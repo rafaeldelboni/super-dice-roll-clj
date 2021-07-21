@@ -20,10 +20,14 @@
   [{:keys [roll results]} :- schemas.models/Rolled]
   (let [{:keys [each total]} results
         {:keys [nick username]} (get-in roll [:command :user])
-        command (get-in roll [:command :command])]
+        command (get-in roll [:command :command])
+        modifier (:modifier roll)]
     (str "*" (if (empty? nick) username nick) " rolled " command "*\n"
          "`[" (string/join "," each) "]"
-         (when-not (zero? (:modifier roll)) (str " + " (:modifier roll))) "`\n"
+         (when-not (zero? modifier)
+           (if (pos? modifier)
+             (str " +" modifier)
+             (str " " modifier))) "`\n"
          "**total: " total "**\n")))
 
 (s/defn roll-command->error-message :- s/Str
