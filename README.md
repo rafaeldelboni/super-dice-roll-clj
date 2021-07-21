@@ -1,19 +1,58 @@
-# microservice-boilerplate
-Clojure Microservice Boilerplate: Components, Reitit, Pedestal, Schema, Postgresql and Tests
+# Bot: Super Dice Roll
 
-## About this example
-This source is a combination of two namespaces
+Discord ~~and Telegram~~ bot that roll dices using using commands like `/roll 4d6+4`.
 
+[![discord-super-dice-roll](https://img.shields.io/badge/Discord-Add%20To%20Your%20Server-blueviolet?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/api/oauth2/authorize?client_id=861964097700757534&permissions=2148005952&scope=bot%20applications.commands)
+
+## Usage
+- `/help`    Show available commands and how to use them.
+- `/roll`    Roll dices. Example: `/roll 3D6+3`.
+- `/history` Lists your lasts 10 rolls with the results.
+
+# Developers
+
+## About this code
  - **parenthesin**: Helpers and wrappers to give a foundation to create new services in clojure,
 you can find components for database, http, webserver and tools for db migrations.
- - **microservice-boilerplate**: An example of how use the boilerplate, it's a simple btc wallet
-that fetch the current btc price in USD and you can check your transaction history, do deposits and withdrawals.
+ - **super-dice-roll**: Bot code for interaction via webhooks and rolling dices.
+
+## Available Endpoints
 
 Verb | URL                | Description
 -----| ------------------ | ------------------------------------------------
-GET  | /wallet/history    | get all wallet entries and current total
-POST | /wallet/deposit    | do a deposit in btc in the wallet
-POST | /wallet/withdrawal | do a withdrawal in btc in the wallet if possible
+POST | /discord/webhook   | Receives Discord's [interaction object](https://discord.com/developers/docs/interactions/slash-commands#interaction-object)
+
+## Configure the config.edn 
+Set the [`resources/config.edn`](https://github.com/rafaeldelboni/super-dice-roll-clj/blob/main/resources/config.edn) with your keys or the corresponding enviroment variables.  
+
+## Docker
+Start containers with postgres `user: postgres, password: postgres, hostname: db, port: 5432`  
+and [pg-admin](http://localhost:5433) `email: pg@pg.cc, password: pg, port: 5433`
+```bash
+docker-compose -f docker/docker-compose.yml up -d
+```
+Stop containers
+```bash
+docker-compose -f docker/docker-compose.yml stop
+```
+
+## Running the server
+First you need to have the database running, for this you can use the docker command in the step above.
+
+### Repl
+You can start a repl open and evaluate the file `src/super_dice_roll/server.clj` and execute following code:
+```clojure
+(start-system! (build-system-map))
+```
+
+### Uberjar
+You can generate an uberjar and execute it via java in the terminal:
+```bash
+# genarate a service.jar in the root of this repository.
+clj -X:uberjar
+# execute it via java
+java -jar service.jar
+```
 
 ## Repl
 To open a nrepl
@@ -68,63 +107,6 @@ clj -M:migratus rollback
 ```
 See [Migratus Usage](https://github.com/yogthos/migratus#usage) for documentation on each command.
 
-
-## Docker
-Start containers with postgres `user: postgres, password: postgres, hostname: db, port: 5432`  
-and [pg-admin](http://localhost:5433) `email: pg@pg.cc, password: pg, port: 5433`
-```bash
-docker-compose -f docker/docker-compose.yml up -d
-```
-Stop containers
-```bash
-docker-compose -f docker/docker-compose.yml stop
-```
-
-## Running the server
-First you need to have the database running, for this you can use the docker command in the step above.
-
-### Repl
-You can start a repl open and evaluate the file `src/microservice_boilerplate/server.clj` and execute following code:
-```clojure
-(start-system! (build-system-map))
-```
-
-### Uberjar
-You can generate an uberjar and execute it via java in the terminal:
-```bash
-# genarate a service.jar in the root of this repository.
-clj -X:uberjar
-# execute it via java
-java -jar service.jar
-```
-
-## Features
-
-### System
-- [schema](https://github.com/plumatic/schema) Types and Schemas
-- [component](https://github.com/stuartsierra/component) System Lifecycle and Dependencies
-- [pedestal](https://github.com/pedestal/pedestal) Http Server
-- [reitit](https://github.com/metosin/reitit) Http Routes System 
-- [clj-http](https://github.com/dakrone/clj-http) Http Client
-- [cheshire](https://github.com/dakrone/cheshire) JSON encoding
-- [aero](https://github.com/juxt/aero) Configuration file and enviroment variables manager
-- [timbre](https://github.com/ptaoussanis/timbre) Logging library
-- [next-jdbc](https://github.com/seancorfield/next-jdbc) JDBC-based layer to access databases
-- [honeysql](https://github.com/seancorfield/honeysql) SQL as Clojure data structures
-- [depstar](https://github.com/seancorfield/depstar) Generates Uberjars for releases
-
-### Tests
-- [kaocha](https://github.com/lambdaisland/kaocha) Test runner
-- [kaocha-cloverage](https://github.com/lambdaisland/kaocha-cloverage) Kaocha plugin for code coverage reports
-- [schema-generators](https://github.com/plumatic/schema-generators) Data generation and generative testing
-- [state-flow](https://github.com/nubank/state-flow) Testing framework for integration tests
-- [matcher-combinators](https://github.com/nubank/matcher-combinators) Assertions in data structures
-- [pg-embedded-clj](https://github.com/Bigsy/pg-embedded-clj) Embedded PostgreSQL for integration tests
-
-### Linting
-- [clj-kondo](https://github.com/clj-kondo/clj-kondo) Code linter
-- [cljfmt](https://github.com/weavejester/cljfmt) Auto code formatting
-
 ## Directory Structure
 ```
 ./
@@ -132,18 +114,18 @@ java -jar service.jar
 ├── .github
 │   └── workflows -- Github workflows folder.
 ├── docker -- docker and docker-compose files for the database
-├── resources -- Application resources assets folder and configuration files.
+├── resources -- Application resources assets folder and configuration files
 │   └── migrations -- Current database schemas, synced on service startup.
 ├── src -- Library source code and headers.
 │   ├── parenthesin -- Source for common utilities and helpers.
-│   └── microservice_boilerplate -- Source for the service example (wallet).
+│   └── super_dice_roll -- Source for the bot.
 └── test -- Test source code.
     ├── integration -- Integration tests source (uses state-flow).
     │   ├── parenthesin -- Tests for common utilities and helpers.
-    │   └── microservice_boilerplate -- Tests for service example (wallet).
+    │   └── super_dice_roll -- Tests for bot.
     └── unit -- Unity tests source (uses clojure.test).
         ├── parenthesin -- Tests for common utilities.
-        └── microservice_boilerplate -- Tests for service example (wallet).
+        └── super_dice_roll -- Tests for bot.
 ```
 
 ## License
