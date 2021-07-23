@@ -48,7 +48,7 @@
                 (adapters/wire-in->user guild-request-1)))))
 
 (deftest wire-in->model-test
-  (testing "should reduce and get totals for wallet entries and current user"
+  (testing "should adapt interaction into roll"
     (is (match? {:user {:id "598978693322375444"
                         :username "dombelombers"
                         :nick ""}
@@ -112,7 +112,7 @@
 
 (defspec rolled-message-generative-test 50
   (properties/for-all [rolled (g/generator schemas.models/Rolled)]
-                      (s/validate s/Str (adapters/rolled->message rolled))))
+    (s/validate s/Str (adapters/rolled->message rolled))))
 
 (deftest roll-command-error-message-test
   (testing "adapt roll command into error message"
@@ -133,7 +133,7 @@
 
 (defspec roll-command-error-message-generative-test 50
   (properties/for-all [roll-cmd (g/generator schemas.models/RollCommand)]
-                      (s/validate s/Str (adapters/roll-command->error-message roll-cmd))))
+    (s/validate s/Str (adapters/roll-command->error-message roll-cmd))))
 
 (deftest user-command-history-message-test
   (testing "adapt user command history into message"
@@ -164,4 +164,4 @@
 
 (defspec user-command-history-message-generative-test 50
   (properties/for-all [user-cmd-history (g/generator schemas.models/UserCommandHistory)]
-                      (s/validate s/Str (adapters/user-command-history->message user-cmd-history))))
+    (s/validate s/Str (adapters/user-command-history->message user-cmd-history))))

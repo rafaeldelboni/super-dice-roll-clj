@@ -26,3 +26,18 @@
                                :modifier modifier
                                :each (-> each (json/decode true) vec)}})
                   rolls)})
+
+(s/defn ->name :- s/Str
+  [username :- s/Str
+   nick :- s/Str]
+  (if (empty? nick)
+    username
+    nick))
+
+(s/defn ->modifier :- s/Str
+  [modifier :- s/Int]
+  (if-not (zero? modifier)
+    (if (pos? modifier)
+      (str " +" modifier)
+      (str " " modifier))
+    ""))
