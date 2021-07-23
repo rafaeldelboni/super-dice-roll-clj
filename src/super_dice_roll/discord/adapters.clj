@@ -34,7 +34,7 @@
     (str (adapters/->name username nick) " the command *" command "* is invalid\n"
          messages/help-roll)))
 
-(s/defn roll-command-result->message :- s/Str
+(s/defn ^:private roll-command-result->message :- s/Str
   [{:keys [command results]} :- schemas.models/RollCommandResults]
   (let [{:keys [each modifier total]} results]
     (str "`" command ": " "[" (string/join "," each) "]"
