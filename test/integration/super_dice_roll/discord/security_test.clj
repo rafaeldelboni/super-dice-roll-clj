@@ -1,4 +1,4 @@
-(ns integration.super-dice-roll.security-test
+(ns integration.super-dice-roll.discord.security-test
   (:require [clojure.test :as clojure.test]
             [com.stuartsierra.component :as component]
             [integration.parenthesin.util.webserver :as util.webserver]
@@ -22,15 +22,15 @@
   (let [key-pair (discord.security/generate-keypair)]
     (component/start-system
      (component/system-map
-      :config (components.config/new-config
-               {:discord {:app-public-key (discord.security/bytes->hex (.getEncoded (:public key-pair)))
-                          :app-test-signer (discord.security/new-signer (:private key-pair))}})
-      :http (components.http/new-http-mock {})
-      :router (components.router/new-router routes/routes)
-      :database (component/using (components.database/new-database)
-                                 [:config])
-      :webserver (component/using (components.webserver/new-webserver)
-                                  [:config :http :router :database])))))
+       :config (components.config/new-config
+                {:discord {:app-public-key (discord.security/bytes->hex (.getEncoded (:public key-pair)))
+                           :app-test-signer (discord.security/new-signer (:private key-pair))}})
+       :http (components.http/new-http-mock {})
+       :router (components.router/new-router routes/routes)
+       :database (component/using (components.database/new-database)
+                                  [:config])
+       :webserver (component/using (components.webserver/new-webserver)
+                                   [:config :http :router :database])))))
 
 (defflow
   flow-integration-wallet-test

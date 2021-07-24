@@ -1,4 +1,4 @@
-(ns integration.super-dice-roll.commands-test
+(ns integration.super-dice-roll.discord.commands-test
   (:require [clojure.test :as clojure.test]
             [com.stuartsierra.component :as component]
             [integration.super-dice-roll.util :as util]
@@ -22,15 +22,15 @@
   (let [key-pair (discord.security/generate-keypair)]
     (component/start-system
      (component/system-map
-      :config (components.config/new-config
-               {:discord {:app-public-key (discord.security/bytes->hex (.getEncoded (:public key-pair)))
-                          :app-test-signer (discord.security/new-signer (:private key-pair))}})
-      :http (components.http/new-http-mock {})
-      :router (components.router/new-router routes/routes)
-      :database (component/using (components.database/new-database)
-                                 [:config])
-      :webserver (component/using (components.webserver/new-webserver)
-                                  [:config :http :router :database])))))
+       :config (components.config/new-config
+                {:discord {:app-public-key (discord.security/bytes->hex (.getEncoded (:public key-pair)))
+                           :app-test-signer (discord.security/new-signer (:private key-pair))}})
+       :http (components.http/new-http-mock {})
+       :router (components.router/new-router routes/routes)
+       :database (component/using (components.database/new-database)
+                                  [:config])
+       :webserver (component/using (components.webserver/new-webserver)
+                                   [:config :http :router :database])))))
 
 (defflow
   flow-integration-wallet-test
@@ -82,9 +82,7 @@
     (flow "should be able to send a /help command"
       (match? (matchers/embeds {:status 200
                                 :body  {:type 4
-                                        :data {:content (str messages/help-header "\n"
-                                                             messages/help-roll "\n"
-                                                             messages/help-history)}}})
+                                        :data {:content (messages/help :discord)}}})
               (util/signed-request! {:method :post
                                      :uri    "/discord/webhook"
                                      :body   {:id "discord-id-1"
