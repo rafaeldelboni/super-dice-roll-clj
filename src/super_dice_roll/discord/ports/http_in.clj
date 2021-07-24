@@ -1,5 +1,6 @@
 (ns super-dice-roll.discord.ports.http-in
   (:require [schema.core :as s]
+            [super-dice-roll.adapters :as base.adapters]
             [super-dice-roll.controllers :as base.controller]
             [super-dice-roll.discord.adapters :as discord.adapters]
             [super-dice-roll.discord.schemas.http-in :as discord.schemas.http-in]
@@ -14,11 +15,11 @@
                   "roll" (let [roll-cmd (discord.adapters/wire-in->model body)
                                rolled (base.controller/do-roll! roll-cmd components)]
                            (if rolled
-                             (discord.adapters/rolled->message rolled)
-                             (discord.adapters/roll-command->error-message roll-cmd)))
+                             (base.adapters/rolled->message rolled)
+                             (base.adapters/roll-command->error-message roll-cmd)))
                   "history" (-> (discord.adapters/wire-in->user body)
                                 (base.controller/get-user-command-history components)
-                                discord.adapters/user-command-history->message)
+                                base.adapters/user-command-history->message)
                   "help" (str messages/help-header "\n"
                               messages/help-roll "\n"
                               messages/help-history))]

@@ -65,10 +65,13 @@
 
 (s/defn roll-command->error-message :- s/Str
   [{:keys [user command]} :- schemas.models/RollCommand]
-  (let [{:keys [nick username]} user]
+  (let [{:keys [nick username channel]} user]
     (selmer/render
-     (str "{{username}} the command *{{command}}* is invalid\n"
-          "{{help|safe}}")
+     (case channel
+       :discord (str "{{username}} the command *{{command}}* is invalid\n"
+                     "{{help|safe}}")
+       :telegram (str "{{username}} the command _{{command}}_ is invalid\n"
+                      "{{help|safe}}"))
      {:username (->name username nick)
       :command command
       :help messages/help-roll})))
@@ -91,6 +94,6 @@
        :discord (str "*{{username}} history*\n"
                      "{{history}}")
        :telegram (str "_{{username}} history_\n"
-                     "{{history}}"))
+                      "{{history}}"))
      {:username (->name username nick)
       :history (apply str (mapv #(roll-command-result->message %) history))})))
