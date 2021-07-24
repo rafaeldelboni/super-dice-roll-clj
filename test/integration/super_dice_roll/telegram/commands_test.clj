@@ -42,6 +42,29 @@
    :fail-fast? true}
   (flow "should interact with system"
 
+    (flow "should not error on nil"
+      (match? (matchers/embeds {:status 200})
+              (util.webserver/request! {:method :post
+                                        :uri    (str "/telegram/webhook/" telegram-bot-token)
+                                        :body   {:update_id 987654321
+                                                 :message {:date 1626904234
+                                                           :entities [{:offset 0
+                                                                       :type "bot_command"
+                                                                       :length 5}]
+                                                           :chat {:first_name "Schua"
+                                                                  :username "schuazeneger"
+                                                                  :type "private"
+                                                                  :id 111
+                                                                  :last_name "Zeneger"}
+                                                           :message_id 1
+                                                           :from {:first_name "Schua"
+                                                                  :language_code "en"
+                                                                  :is_bot false
+                                                                  :username "schuazeneger"
+                                                                  :id 12345678
+                                                                  :last_name "Zeneger"}
+                                                           :text nil}}})))
+
     (flow "should ignore any other text"
       (match? (matchers/embeds {:status 200})
               (util.webserver/request! {:method :post

@@ -8,8 +8,8 @@
 (defn process-update!
   [{{body :body} :parameters
     components :components}]
-  (let [message-id (get-in body [:message :chat :id])
-        slash-cmd (get-in body [:message :text])
+  (let [message-id (or (get-in body [:message :chat :id]) 0)
+        slash-cmd (or (get-in body [:message :text]) "") 
         message (condp #(seq (re-find %1 %2)) slash-cmd
                   #"^/roll" (let [roll-cmd (telegram.adapters/wire-in->model body)
                                   rolled (base.controller/do-roll! roll-cmd components)]
