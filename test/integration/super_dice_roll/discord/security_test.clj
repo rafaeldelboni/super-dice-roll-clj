@@ -1,4 +1,4 @@
-(ns integration.super-dice-roll.security-test
+(ns integration.super-dice-roll.discord.security-test
   (:require [clojure.test :as clojure.test]
             [com.stuartsierra.component :as component]
             [integration.parenthesin.util.webserver :as util.webserver]

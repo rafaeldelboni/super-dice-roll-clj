@@ -12,7 +12,7 @@
      headers :header} :parameters
     components :components}]
   (logs/log :info {:channel :telegram :header headers :path path :body body})
-  (let [message-id (get-in body [:message :from :id])
+  (let [message-id (get-in body [:message :chat :id])
         slash-cmd (get-in body [:message :text])
         message (condp #(seq (re-find %1 %2)) slash-cmd
                   #"^/roll" (let [roll-cmd (telegram.adapters/wire-in->model body)

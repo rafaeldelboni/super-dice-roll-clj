@@ -11,6 +11,9 @@
         (components.http/reset-responses! http)
         state-flow.api/return)))
 
-(defn http-out-requests []
-  (flow "get http-out mock requests"
-    (state-flow.api/get-state (comp deref :requests :http :webserver))))
+(defn http-out-requests
+  ([]
+   (http-out-requests identity))
+  ([afn]
+   (flow "retrieves http request"
+     (state-flow.api/get-state (comp afn deref :requests :http)))))

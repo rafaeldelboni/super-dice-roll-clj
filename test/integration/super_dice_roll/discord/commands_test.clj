@@ -1,4 +1,4 @@
-(ns integration.super-dice-roll.commands-test
+(ns integration.super-dice-roll.discord.commands-test
   (:require [clojure.test :as clojure.test]
             [com.stuartsierra.component :as component]
             [integration.super-dice-roll.util :as util]

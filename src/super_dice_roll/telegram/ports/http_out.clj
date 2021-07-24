@@ -5,7 +5,7 @@
 
 (s/defn send-message
   [message :- s/Str
-   message-id :- s/Str
+   message-id :- s/Int
    {:keys [config http]} :- schemas.types/Components]
   (let [bot-token (get-in config [:config :telegram :bot-token])]
     (components.http/request
