@@ -1,8 +1,9 @@
 # Bot: Super Dice Roll
 
-Discord ~~and Telegram~~ bot that roll dices using using commands like `/roll 4d6+4`.
+**Discord** and **Telegram** bot that roll dices using using commands like `/roll 4d6+4`.
 
 [![discord-super-dice-roll](https://img.shields.io/badge/Discord-Add%20To%20Your%20Server-blueviolet?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/api/oauth2/authorize?client_id=861964097700757534&permissions=2148005952&scope=bot%20applications.commands)
+[![telegram-super-dice-roll](https://img.shields.io/badge/Telegram-Add%20To%20Your%20Group-blue?style=for-the-badge&logo=telegram&logoColor=white)](https://telegram.me/superdiceroll_bot)
 
 ## Usage
 - `/help`    Show available commands and how to use them.
@@ -20,9 +21,10 @@ you can find components for database, http, webserver and tools for db migration
 
 ## Available Endpoints
 
-Verb | URL                | Description
------| ------------------ | ------------------------------------------------
-POST | /discord/webhook   | Receives Discord's [interaction object](https://discord.com/developers/docs/interactions/slash-commands#interaction-object)
+Verb | URL                           | Description
+-----| ----------------------------- | ------------------------------------------------
+POST | /discord/webhook              | Receives Discord's [interaction object](https://discord.com/developers/docs/interactions/slash-commands#interaction-object)
+POST | /telegram/webhook/{bot-token} | Receives Telegram's [update object](https://core.telegram.org/bots/api#update)
 
 ## Configure the config.edn 
 Set the [`resources/config.edn`](https://github.com/rafaeldelboni/super-dice-roll-clj/blob/main/resources/config.edn) with your keys or the corresponding enviroment variables.  
