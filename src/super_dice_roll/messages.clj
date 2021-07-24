@@ -32,8 +32,15 @@
     :telegram (str "<pre>/history</pre>\n"
                    "Lists your lasts 10 rolls with the results.\n")))
 
+(s/defn help-footer :- s/Str
+  [channel :- schemas.models/Channel]
+  (case channel
+    :discord "[Source Code](https://j.mp/sdr-bot)\n"
+    :telegram "<a href=\"https://j.mp/sdr-bot\">Source Code</a>\n"))
+
 (s/defn help :- s/Str
   [channel :- schemas.models/Channel]
   (str (help-header channel) "\n"
        (help-roll channel) "\n"
-       (help-history channel)))
+       (help-history channel) "\n"
+       (help-footer channel)))
