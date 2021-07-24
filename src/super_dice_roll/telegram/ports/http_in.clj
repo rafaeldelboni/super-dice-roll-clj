@@ -20,8 +20,8 @@
                                    (base.controller/get-user-command-history components)
                                    base.adapters/user-command-history->message)
                   #"^/help" (messages/help :telegram)
-                  (str slash-cmd " is a invalid command\n"
-                       (messages/help :telegram)))]
-    (telegram.ports.http-out/send-message message message-id components))
+                  nil)]
+    (when message
+      (telegram.ports.http-out/send-message message message-id components)))
   {:status 200
    :body {}})
