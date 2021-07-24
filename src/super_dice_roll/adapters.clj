@@ -39,11 +39,10 @@
 
 (s/defn ->modifier :- s/Str
   [modifier :- s/Int]
-  (if-not (zero? modifier)
-    (if (pos? modifier)
-      (str " +" modifier)
-      (str " " modifier))
-    ""))
+  (cond
+    (< modifier 0) (str " " modifier)
+    (> modifier 0) (str " +" modifier)
+    :else ""))
 
 (s/defn rolled->message :- s/Str
   [{:keys [roll results]} :- schemas.models/Rolled]
