@@ -39,4 +39,11 @@
                         :username "dongomagolo"
                         :nick ""}
                  :command "6d4+5"}
-                (adapters/wire-in->model update-msg-1)))))
+                (adapters/wire-in->model update-msg-1))))
+
+  (testing "should adapt empty rolls"
+    (is (match? {:user {:id "7654321"
+                        :username "dongomagolo"
+                        :nick ""}
+                 :command ""}
+                (adapters/wire-in->model (assoc-in update-msg-1 [:message :text] "/roll"))))))

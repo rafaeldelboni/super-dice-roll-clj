@@ -14,8 +14,6 @@
 
 (s/defn wire-in->model :- schemas.models/RollCommand
   [{:keys [message] :as update-message} :- telegram.schemas.http-in/Update]
+  (let [command (or (-> (:text message) (string/split #"/roll") last) "")]
   {:user (wire-in->user update-message)
-   :command (-> (:text message)
-                (string/split #"/roll")
-                last
-                string/trim)})
+   :command (string/trim command)}))
