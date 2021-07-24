@@ -21,7 +21,8 @@
 (s/defschema MessageEntity
   {:type s/Str
    (s/optional-key :offset) s/Int
-   (s/optional-key :length) s/Int})
+   (s/optional-key :length) s/Int
+   s/Any s/Any})
 
 (s/defschema Message
   {:message_id s/Int
