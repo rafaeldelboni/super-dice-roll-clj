@@ -22,13 +22,16 @@
 (s/defn db->user-command-history :- schemas.models/UserCommandHistory
   [rolls :- [schemas.db/Roll]
    user :- schemas.models/User]
-  {:user user
-   :history (mapv (fn [{:rolls/keys [command each modifier total]}]
-                    {:command command
-                     :results {:total total
-                               :modifier modifier
-                               :each (-> each (json/decode true) vec)}})
-                  rolls)})
+  (let [roll-count (count rolls)]
+    {:user user
+     :history (if (> roll-count 0)
+                (mapv (fn [{:rolls/keys [command each modifier total]}]
+                        {:command command
+                         :results {:total total
+                                   :modifier modifier
+                                   :each (-> each (json/decode true) vec)}})
+                      rolls)
+                [])}))
 
 (s/defn ->name :- s/Str
   [username :- s/Str
@@ -98,4 +101,6 @@
        :telegram (str "<i>{{username}} history</i>\n"
                       "{{history|safe}}"))
      {:username (->name username nick)
-      :history (apply str (mapv #(roll-command-result->message % channel) history))})))
+      :history (if (> (count history) 0)
+                 (apply str (mapv #(roll-command-result->message % channel) history))
+                 "is empty\n")})))

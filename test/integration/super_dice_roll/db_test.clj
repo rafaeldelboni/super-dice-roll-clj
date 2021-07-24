@@ -44,6 +44,11 @@
                            :modifier 5
                            :total 18}}]]
 
+    (flow "empty history should not throw error"
+      (match? {:user user
+               :history []}
+              (db/get-user-channel-rolls user database)))
+
     (state/invoke #(db/insert-new-roll! roll database))
 
     (state/invoke

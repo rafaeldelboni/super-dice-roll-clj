@@ -175,7 +175,19 @@
                   "<pre>4d6+4: [2,4,1,3] +4 = 14</pre>\n<pre>4d6-4: [2,4,1,3] -4 = 6</pre>\n")
              (adapters/user-command-history->message
               (assoc-in user-history [:user :channel] :telegram)))
-          "should show user history telegram"))))
+          "should show user history telegram")
+
+      (is (= "*wararana history*\nis empty\n"
+             (adapters/user-command-history->message
+              (assoc user-history :history [])))
+          "should show user empty history")
+
+      (is (= "<i>wararana history</i>\nis empty\n"
+             (adapters/user-command-history->message
+              (-> user-history
+                  (assoc :history [])
+                  (assoc-in [:user :channel] :telegram))))
+          "should show user empty history"))))
 
 (defspec user-command-history-message-generative-test 50
   (properties/for-all [user-cmd-history (g/generator schemas.models/UserCommandHistory)]

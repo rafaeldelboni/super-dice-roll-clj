@@ -16,9 +16,17 @@
 
 (defn- parse-modifiers [value modifier]
   (let [parsed (string/split value (re-pattern (str "\\" modifier)))
-        sign (if (= modifier \+) 1 -1)]
+        sign (if (= modifier \+) 1 -1)
+        parsed-modifier (->> parsed
+                             last
+                             (re-seq #"[0-9\.]+")
+                             first)]
     {:dice (-> parsed first (int-or-arg 0))
-     :modifier (-> parsed last not-empty (or 0) Integer/parseInt (* sign))}))
+     :modifier (-> parsed-modifier
+                   not-empty
+                   (or 0)
+                   Integer/parseInt
+                   (* sign))}))
 
 (defn- parse-second-part [command]
   (cond
