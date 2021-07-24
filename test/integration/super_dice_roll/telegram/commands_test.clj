@@ -101,7 +101,7 @@
 
     (flow "should send message to telegram api with /history results"
       (match? {:chat_id 222
-               :text (matchers/regex #"\<i>schuazeneger history</i>\n<pre>4d6-1: \[")
+               :text (matchers/regex #"\<i>schuazeneger history</i>\n")
                :parse_mode "HTML"}
               (util.http/http-out-requests
                (fn [requests]
@@ -109,7 +109,7 @@
                       (filter #(= (get-in % [:query-params :chat_id]) 222))
                       first
                       :query-params)))
-              {:times-to-try 5
+              {:times-to-try 10
                :sleep-time   200}))
 
     (flow "should be able to send a /help command"

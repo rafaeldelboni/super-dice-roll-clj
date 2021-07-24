@@ -11,17 +11,17 @@
 
 (s/defschema User
   {:id s/Int
-   :is_bot s/Bool
-   :first_name s/Str
-   :last_name s/Str
-   :language_code s/Str
-   :username s/Str
+   (s/optional-key :username) s/Str
+   (s/optional-key :is_bot) s/Bool
+   (s/optional-key :first_name) s/Str
+   (s/optional-key :last_name) s/Str
+   (s/optional-key :language_code) s/Str
    s/Any s/Any})
 
 (s/defschema MessageEntity
   {:type s/Str
-   :offset s/Int
-   :length s/Int})
+   (s/optional-key :offset) s/Int
+   (s/optional-key :length) s/Int})
 
 (s/defschema Message
   {:message_id s/Int

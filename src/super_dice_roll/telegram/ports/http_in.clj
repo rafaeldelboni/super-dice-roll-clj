@@ -1,17 +1,13 @@
 (ns super-dice-roll.telegram.ports.http-in
-  (:require [parenthesin.logs :as logs]
-            [super-dice-roll.adapters :as base.adapters]
+  (:require [super-dice-roll.adapters :as base.adapters]
             [super-dice-roll.controllers :as base.controller]
             [super-dice-roll.messages :as messages]
             [super-dice-roll.telegram.adapters :as telegram.adapters]
             [super-dice-roll.telegram.ports.http-out :as telegram.ports.http-out]))
 
 (defn process-update!
-  [{{path :path
-     body :body
-     headers :header} :parameters
+  [{{body :body} :parameters
     components :components}]
-  (logs/log :info {:channel :telegram :header headers :path path :body body})
   (let [message-id (get-in body [:message :chat :id])
         slash-cmd (get-in body [:message :text])
         message (condp #(seq (re-find %1 %2)) slash-cmd

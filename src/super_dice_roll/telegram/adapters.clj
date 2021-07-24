@@ -8,7 +8,7 @@
   [{:keys [message]} :- telegram.schemas.http-in/Update]
   (let [{{:keys [id username]} :from} message]
     {:id (str id)
-     :username username
+     :username (str username)
      :nick ""
      :channel :telegram}))
 
