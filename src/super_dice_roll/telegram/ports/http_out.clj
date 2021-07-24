@@ -14,8 +14,5 @@
       :query-params {:chat_id message-id
                      :text message
                      :parse_mode "HTML"}
-      ;TODO: need to scape a bunch of chars for this
-      ;https://core.telegram.org/bots/api#formatting-options
-                     ;:parse_mode "MarkdownV2"}
       :accept :json
       :method :get})))

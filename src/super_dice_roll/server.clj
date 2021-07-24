@@ -27,8 +27,8 @@
        component/start
        (reset! system-atom)))
 
-#_{:clj-kondo/ignore [:unused-public-var]}
 (defn stop-system! []
+  (logs/log :info :system-stop)
   (swap!
    system-atom
    (fn [s] (when s (component/stop s)))))
@@ -36,7 +36,10 @@
 (defn -main
   "The entry-point for 'gen-class'"
   [& _args]
-  (start-system! (build-system-map)))
+  (start-system! (build-system-map))
+  ; Graceful shutdown
+  (.addShutdownHook (Runtime/getRuntime)
+                    (Thread. ^Runnable stop-system!)))
 
 (comment
   (stop-system!)

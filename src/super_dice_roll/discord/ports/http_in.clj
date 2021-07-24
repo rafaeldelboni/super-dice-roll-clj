@@ -20,9 +20,7 @@
                   "history" (-> (discord.adapters/wire-in->user body)
                                 (base.controller/get-user-command-history components)
                                 base.adapters/user-command-history->message)
-                  "help" (str messages/help-header "\n"
-                              messages/help-roll "\n"
-                              messages/help-history))]
+                  "help" (messages/help :discord))]
     {:status 200
      :body {:type 4
             :data {:content content}}}))

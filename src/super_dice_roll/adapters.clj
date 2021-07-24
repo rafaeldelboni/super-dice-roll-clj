@@ -53,9 +53,9 @@
        :discord (str "*{{username}} rolled {{command}}*\n"
                      "`[{{each}}]{{modifier}}`\n"
                      "**total: {{total}}**\n")
-       :telegram (str "_{{username}} rolled {{command}}_\n"
-                      "`[{{each}}]{{modifier}}`\n"
-                      "*total: {{total}}*\n"))
+       :telegram (str "<i>{{username}} rolled {{command}}</i>\n"
+                      "<pre>[{{each}}]{{modifier}}</pre>\n"
+                      "<b>total: {{total}}</b>\n"))
      {:username (->name username nick)
       :command (get-in roll [:command :command])
       :each (string/join "," each)
@@ -69,17 +69,20 @@
      (case channel
        :discord (str "{{username}} the command *{{command}}* is invalid\n"
                      "{{help|safe}}")
-       :telegram (str "{{username}} the command _{{command}}_ is invalid\n"
+       :telegram (str "{{username}} the command <i>{{command}}</i> is invalid\n"
                       "{{help|safe}}"))
      {:username (->name username nick)
       :command command
-      :help messages/help-roll})))
+      :help (messages/help-roll channel)})))
 
 (s/defn ^:private roll-command-result->message :- s/Str
-  [{:keys [command results]} :- schemas.models/RollCommandResults]
+  [{:keys [command results]} :- schemas.models/RollCommandResults
+   channel :- schemas.models/Channel]
   (let [{:keys [each modifier total]} results]
     (selmer/render
-     "`{{command}}: [{{each}}]{{modifier}} = {{total}}`\n"
+     (case channel
+       :discord "`{{command}}: [{{each}}]{{modifier}} = {{total}}`\n"
+       :telegram "<pre>{{command}}: [{{each}}]{{modifier}} = {{total}}</pre>\n")
      {:command command
       :each (string/join "," each)
       :modifier (->modifier modifier)
@@ -91,8 +94,8 @@
     (selmer/render
      (case channel
        :discord (str "*{{username}} history*\n"
-                     "{{history}}")
-       :telegram (str "_{{username}} history_\n"
-                      "{{history}}"))
+                     "{{history|safe}}")
+       :telegram (str "<i>{{username}} history</i>\n"
+                      "{{history|safe}}"))
      {:username (->name username nick)
-      :history (apply str (mapv #(roll-command-result->message %) history))})))
+      :history (apply str (mapv #(roll-command-result->message % channel) history))})))

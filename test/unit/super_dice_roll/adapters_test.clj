@@ -77,17 +77,17 @@
                   (assoc-in [:results :total] 11))))
           "should show username and no modifier discord")
 
-      (is (= "_nicola rolled 2d12+5_\n`[4,7] +5`\n*total: 16*\n"
+      (is (= "<i>nicola rolled 2d12+5</i>\n<pre>[4,7] +5</pre>\n<b>total: 16</b>\n"
              (adapters/rolled->message
               (-> rolled
                   (assoc-in [:roll :command :user :channel] :telegram)
                   (assoc-in [:roll :command :user :nick] "nicola"))))
           "should show nick and modifier telegram")
-      (is (= "_usernola rolled 2d12+5_\n`[4,7] +5`\n*total: 16*\n"
+      (is (= "<i>usernola rolled 2d12+5</i>\n<pre>[4,7] +5</pre>\n<b>total: 16</b>\n"
              (adapters/rolled->message
               (assoc-in rolled [:roll :command :user :channel] :telegram)))
           "should show username and modifier telegram")
-      (is (= "_usernola rolled 2d12-7_\n`[4,7] -7`\n*total: 4*\n"
+      (is (= "<i>usernola rolled 2d12-7</i>\n<pre>[4,7] -7</pre>\n<b>total: 4</b>\n"
              (adapters/rolled->message
               (-> rolled
                   (assoc-in [:roll :command :user :channel] :telegram)
@@ -95,7 +95,7 @@
                   (assoc-in [:results :modifier] -7)
                   (assoc-in [:results :total] 4))))
           "should show username and negative modifier telegram")
-      (is (= "_usernola rolled 2d12+5_\n`[4,7]`\n*total: 11*\n"
+      (is (= "<i>usernola rolled 2d12+5</i>\n<pre>[4,7]</pre>\n<b>total: 11</b>\n"
              (adapters/rolled->message
               (-> rolled
                   (assoc-in [:roll :command :user :channel] :telegram)
@@ -111,7 +111,7 @@
 (deftest roll-command-error-message-test
   (testing "adapt roll command into error message"
     (is (= (str "wararana the command *wreberwreber* is invalid\n"
-                messages/help-roll)
+                (messages/help-roll :discord))
            (adapters/roll-command->error-message {:user {:id "123456789"
                                                          :username "dombelombers"
                                                          :nick "wararana"
@@ -120,7 +120,7 @@
         "should show show nick and error for discord")
 
     (is (= (str "dombelombers the command *wreberwreber* is invalid\n"
-                messages/help-roll)
+                (messages/help-roll :discord))
            (adapters/roll-command->error-message {:user {:id "123456789"
                                                          :username "dombelombers"
                                                          :nick ""
@@ -128,14 +128,14 @@
                                                   :command "wreberwreber"}))
         "should show show username and error for discord")
 
-    (is (= (str "dombelombers the command _wreberwreber_ is invalid\n"
-                messages/help-roll)
+    (is (= (str "dombelombers the command <i>wreberwreber</i> is invalid\n"
+                (messages/help-roll :telegram))
            (adapters/roll-command->error-message {:user {:id "123456789"
                                                          :username "dombelombers"
                                                          :nick ""
                                                          :channel :telegram}
                                                   :command "wreberwreber"}))
-        "should show show username and error for telegam")))
+        "should show show username and error for telegram")))
 
 (defspec roll-command-error-message-generative-test 50
   (properties/for-all [roll-cmd (g/generator schemas.models/RollCommand)]
@@ -171,8 +171,8 @@
              (adapters/user-command-history->message user-history))
           "should show user history discord")
 
-      (is (= (str "_wararana history_\n`d12: [7] = 7`\n`2d6: [2,4] = 6`\n"
-                  "`4d6+4: [2,4,1,3] +4 = 14`\n`4d6-4: [2,4,1,3] -4 = 6`\n")
+      (is (= (str "<i>wararana history</i>\n<pre>d12: [7] = 7</pre>\n<pre>2d6: [2,4] = 6</pre>\n"
+                  "<pre>4d6+4: [2,4,1,3] +4 = 14</pre>\n<pre>4d6-4: [2,4,1,3] -4 = 6</pre>\n")
              (adapters/user-command-history->message
               (assoc-in user-history [:user :channel] :telegram)))
           "should show user history telegram"))))

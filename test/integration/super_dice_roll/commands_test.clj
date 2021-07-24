@@ -82,9 +82,7 @@
     (flow "should be able to send a /help command"
       (match? (matchers/embeds {:status 200
                                 :body  {:type 4
-                                        :data {:content (str messages/help-header "\n"
-                                                             messages/help-roll "\n"
-                                                             messages/help-history)}}})
+                                        :data {:content (messages/help :discord)}}})
               (util/signed-request! {:method :post
                                      :uri    "/discord/webhook"
                                      :body   {:id "discord-id-1"

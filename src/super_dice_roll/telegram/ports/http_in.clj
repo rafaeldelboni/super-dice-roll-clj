@@ -23,13 +23,9 @@
                   #"^/history" (-> (telegram.adapters/wire-in->user body)
                                    (base.controller/get-user-command-history components)
                                    base.adapters/user-command-history->message)
-                  #"^/help" (str messages/help-header "\n"
-                                 messages/help-roll "\n"
-                                 messages/help-history)
+                  #"^/help" (messages/help :telegram)
                   (str slash-cmd " is a invalid command\n"
-                       messages/help-header "\n"
-                       messages/help-roll "\n"
-                       messages/help-history))]
+                       (messages/help :telegram)))]
     (telegram.ports.http-out/send-message message message-id components))
   {:status 200
    :body {}})
