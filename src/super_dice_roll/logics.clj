@@ -24,8 +24,7 @@
     {:dice (-> parsed first (int-or-arg 0))
      :modifier (-> parsed-modifier
                    not-empty
-                   (or 0)
-                   Integer/parseInt
+                   (int-or-arg 0)
                    (* sign))}))
 
 (defn- parse-second-part [command]

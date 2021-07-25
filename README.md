@@ -132,6 +132,11 @@ See [Migratus Usage](https://github.com/yogthos/migratus#usage) for documentatio
         └── super_dice_roll -- Tests for bot.
 ```
 
+## Other iterations
+- https://github.com/rafaeldelboni/super-dice-roll
+- https://github.com/rafaeldelboni/node-super-dice-roll
+
+
 ## License
 This is free and unencumbered software released into the public domain.  
 For more information, please refer to <http://unlicense.org>
