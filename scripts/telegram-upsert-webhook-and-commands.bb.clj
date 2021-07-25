@@ -31,7 +31,8 @@
   (-> (build-commands-url "setWebhook")
       (curl/post {:headers {"Accept" "application/json"
                             "Content-Type" "application/json"}
-                  :body (json/encode {:url (str bot-webhook-url "/" bot-token)})
+                  :body (json/encode {:url (str bot-webhook-url "/" bot-token)
+                                      :allowed_updates ["message"]})
                   :throw true})
       (dissoc :headers)
       println))
