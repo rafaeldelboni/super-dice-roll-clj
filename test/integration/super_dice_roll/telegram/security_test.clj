@@ -22,16 +22,16 @@
 (defn- create-and-start-components! []
   (component/start-system
    (component/system-map
-     :config (components.config/new-config
-              {:telegram {:bot-token telegram-bot-token}})
-     :http (components.http/new-http-mock
-            {(str "https://api.telegram.org/bot" telegram-bot-token "/sendMessage")
-             {:status 200}})
-     :router (components.router/new-router routes/routes)
-     :database (component/using (components.database/new-database)
-                                [:config])
-     :webserver (component/using (components.webserver/new-webserver)
-                                 [:config :http :router :database]))))
+    :config (components.config/new-config
+             {:telegram {:bot-token telegram-bot-token}})
+    :http (components.http/new-http-mock
+           {(str "https://api.telegram.org/bot" telegram-bot-token "/sendMessage")
+            {:status 200}})
+    :router (components.router/new-router routes/routes)
+    :database (component/using (components.database/new-database)
+                               [:config])
+    :webserver (component/using (components.webserver/new-webserver)
+                                [:config :http :router :database]))))
 
 (defflow
   flow-integration-wallet-test

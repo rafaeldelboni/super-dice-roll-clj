@@ -22,7 +22,7 @@
                   public-key (get-in config [:config :discord :app-public-key])
                   signature (get-in ctx [:request :headers "x-signature-ed25519"])
                   timestamp (get-in ctx [:request :headers "x-signature-timestamp"])
-                  raw-body (slurp (:raw-body ctx))]
+                  raw-body (get ctx :raw-body)]
               (if (try-verify-request public-key signature timestamp raw-body)
                 ctx
                 (assoc ctx :response {:headers {"Content-Type" "application/text"}

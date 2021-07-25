@@ -18,9 +18,9 @@
 (defn- create-and-start-components! []
   (component/start-system
    (component/system-map
-     :config (components.config/new-config)
-     :database (component/using (components.database/new-database)
-                                [:config]))))
+    :config (components.config/new-config)
+    :database (component/using (components.database/new-database)
+                               [:config]))))
 
 (g/generate schemas.models/Rolled)
 

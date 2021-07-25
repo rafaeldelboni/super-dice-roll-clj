@@ -16,16 +16,16 @@
 (defspec rolled-db-new-roll-test 50
   (properties/for-all [rolled (g/generator schemas.models/Rolled
                                            schemas.types/TypesLeafGenerators)]
-    (s/validate schemas.db/NewRoll
-                (adapters/rolled->db-new-roll rolled))))
+                      (s/validate schemas.db/NewRoll
+                                  (adapters/rolled->db-new-roll rolled))))
 
 (defspec db-user-command-history-test 50
   (properties/for-all [rolls (g/generator [schemas.db/Roll]
                                           schemas.types/TypesLeafGenerators)
                        user (g/generator schemas.models/User
                                          schemas.types/TypesLeafGenerators)]
-    (s/validate schemas.models/UserCommandHistory
-                (adapters/db->user-command-history rolls user))))
+                      (s/validate schemas.models/UserCommandHistory
+                                  (adapters/db->user-command-history rolls user))))
 
 (deftest ->name-test
   (testing "should get the current user"
@@ -106,7 +106,7 @@
 
 (defspec rolled-message-generative-test 50
   (properties/for-all [rolled (g/generator schemas.models/Rolled)]
-    (s/validate s/Str (adapters/rolled->message rolled))))
+                      (s/validate s/Str (adapters/rolled->message rolled))))
 
 (deftest roll-command-error-message-test
   (testing "adapt roll command into error message"
@@ -139,7 +139,7 @@
 
 (defspec roll-command-error-message-generative-test 50
   (properties/for-all [roll-cmd (g/generator schemas.models/RollCommand)]
-    (s/validate s/Str (adapters/roll-command->error-message roll-cmd))))
+                      (s/validate s/Str (adapters/roll-command->error-message roll-cmd))))
 
 (deftest user-command-history-message-test
   (testing "adapt user command history into message"
@@ -191,4 +191,4 @@
 
 (defspec user-command-history-message-generative-test 50
   (properties/for-all [user-cmd-history (g/generator schemas.models/UserCommandHistory)]
-    (s/validate s/Str (adapters/user-command-history->message user-cmd-history))))
+                      (s/validate s/Str (adapters/user-command-history->message user-cmd-history))))

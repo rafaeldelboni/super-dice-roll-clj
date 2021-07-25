@@ -1,6 +1,5 @@
 (ns unit.super-dice-roll.discord.interceptor-test
-  (:require [clojure.java.io :as io]
-            [clojure.test :refer [deftest is testing use-fixtures]]
+  (:require [clojure.test :refer [deftest is testing use-fixtures]]
             [matcher-combinators.test :refer [match?]]
             [schema.test :as schema.test]
             [super-dice-roll.discord.interceptor :as discord.interceptor]
@@ -14,7 +13,7 @@
    :request {:components {:config {:config {:discord {:app-public-key public-key}}}}
              :headers {"x-signature-ed25519" signature
                        "x-signature-timestamp" timestamp}}
-   :raw-body (io/input-stream (.getBytes body))})
+   :raw-body body})
 
 (deftest verify-request-test
   (let [key-pair (discord.security/generate-keypair)

@@ -5,7 +5,7 @@
 (defn ->cmd [command]
   (assoc
    (g/generate schemas.models/RollCommand)
-    :command command))
+   :command command))
 
 (defn ->roll [roll]
   (merge
