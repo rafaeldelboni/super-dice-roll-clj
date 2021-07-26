@@ -29,7 +29,7 @@
    :date s/Int
    :chat Chat
    (s/optional-key :from) User
-   (s/optional-key :message) s/Str
+   (s/optional-key :text) (s/maybe s/Str)
    (s/optional-key :entities) [MessageEntity]
    s/Any s/Any})
 
