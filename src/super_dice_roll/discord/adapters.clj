@@ -4,8 +4,9 @@
             [super-dice-roll.schemas.models :as schemas.models]))
 
 (s/defn wire-in->user :- schemas.models/User
-  [{{:keys [user nick]} :member} :- discord.schemas.http-in/InteractionRequest]
-  (let [{:keys [id username]} user]
+  [{{:keys [user nick]} :member
+    dm-user :user} :- discord.schemas.http-in/InteractionRequest]
+  (let [{:keys [id username]} (or user dm-user)]
     {:id id
      :username username
      :nick (str nick)

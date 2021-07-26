@@ -35,11 +35,20 @@
                                         :type 3}]}})
 
 (deftest wire-in->user-test
-  (testing "should get the current user"
+  (testing "should get the guild current user"
     (is (match? {:id "598978693322375444"
                  :username "dombelombers"
                  :nick ""}
-                (adapters/wire-in->user guild-request-1)))))
+                (adapters/wire-in->user guild-request-1))))
+  (testing "should get the current direct message user"
+    (is (match? {:id "111111111"
+                 :username "directousero"
+                 :nick ""}
+                (adapters/wire-in->user
+                 (-> guild-request-1
+                     (dissoc :member)
+                     (assoc :user {:id "111111111"
+                                   :username "directousero"})))))))
 
 (deftest wire-in->model-test
   (testing "should adapt interaction into roll"
