@@ -19,4 +19,4 @@
         :accept :json
         :method :get})
       (catch Exception e
-        logs/log :error :http-out-message-response e))))
+        (logs/log :error :http-out-message-response e)))))
