@@ -36,10 +36,10 @@
 (defn -main
   "The entry-point for 'gen-class'"
   [& _args]
-  (start-system! (build-system-map))
   ; Graceful shutdown
   (.addShutdownHook (Runtime/getRuntime)
-                    (Thread. ^Runnable stop-system!)))
+                    (Thread. ^Runnable stop-system!))
+  (start-system! (build-system-map)))
 
 (comment
   (stop-system!)

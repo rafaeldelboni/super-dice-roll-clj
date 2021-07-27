@@ -77,7 +77,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: built-uberjar
-          path: service.jar
+          path: |
+            service.jar
+            Procfile
           retention-days: 1
 
   update-telegram-commands:
