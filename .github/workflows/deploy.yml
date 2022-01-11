@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Prepare java
-        uses: actions/setup-java@v2.3.1
+        uses: actions/setup-java@v2.5.0
         with:
           distribution: 'adopt'
           java-version: '11'
@@ -33,10 +33,10 @@ jobs:
       - name: Install clojure tools-deps
         uses: DeLaGuardo/setup-clojure@master
         with:
-          tools-deps: 1.10.3.986
+          tools-deps: 1.10.3.1058
 
       - name: Cache Maven packages
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/deps.edn') }}
@@ -53,7 +53,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Prepare java
-        uses: actions/setup-java@v2.3.1
+        uses: actions/setup-java@v2.5.0
         with:
           distribution: 'adopt'
           java-version: '11'
@@ -61,10 +61,10 @@ jobs:
       - name: Install clojure tools-deps
         uses: DeLaGuardo/setup-clojure@master
         with:
-          tools-deps: 1.10.3.986
+          tools-deps: 1.10.3.1058
 
       - name: Cache Maven packages
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/deps.edn') }}
@@ -90,7 +90,7 @@ jobs:
       - name: Setup Babashka
         uses: turtlequeue/setup-babashka@v1.3.0
         with:
-          babashka-version: 0.5.0
+          babashka-version: 0.7.3
 
       - name: Updates Webhook url
         run: bb ./scripts/telegram-upsert-webhook-and-commands.bb.clj --update-webhook
@@ -120,7 +120,7 @@ jobs:
       - name: Setup Babashka
         uses: turtlequeue/setup-babashka@v1.3.0
         with:
-          babashka-version: 0.5.0
+          babashka-version: 0.7.3
 
       - name: Updates Slash Commands in Discord
         run: bb ./scripts/discord-upsert-slash-commands.bb.clj --update
