@@ -34,7 +34,7 @@
                        nubank/state-flow {:mvn/version "5.14.1"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
-  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp {:mvn/version "2022.06.29-19.32.13"}}
+  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2022.06.29-19.32.13"}}
                 :main-opts ["-m" "clojure-lsp.main"]}
 
   :migratus {:main-opts ["-m" "parenthesin.migrations"]}

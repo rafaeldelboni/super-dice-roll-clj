@@ -87,13 +87,16 @@ clj -M:test --plugin kaocha.plugin/cloverage
 ```
 
 ## Lint
-Auto code format
+Runs LSP to fix format and namespaces
 ```bash
-clj -M:lint-fix
+clojure -M:clojure-lsp format
+clojure -M:clojure-lsp clean-ns
 ```
-Runs kondo to lint src/test files
+Runs LSP to check format and namespaces
 ```bash
-clj -M:lint
+clojure -M:clojure-lsp format --dry
+clojure -M:clojure-lsp clean-ns --dry
+clojure -M:clojure-lsp diagnostics
 ```
 
 ## Migrations
