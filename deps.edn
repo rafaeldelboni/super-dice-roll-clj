@@ -20,7 +20,6 @@
         org.bouncycastle/bcprov-jdk15on {:mvn/version "1.70"}
         org.postgresql/postgresql {:mvn/version "42.5.0"}
         org.slf4j/slf4j-api {:mvn/version "2.0.2"}
-        org.xerial/sqlite-jdbc {:mvn/version "3.39.3.0"}
         prismatic/schema {:mvn/version "1.4.0"}
         prismatic/schema-generators {:mvn/version "0.1.5"}
         selmer/selmer {:mvn/version "1.12.55"}}
