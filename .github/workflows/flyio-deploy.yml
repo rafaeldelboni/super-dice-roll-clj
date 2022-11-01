@@ -144,24 +144,7 @@ jobs:
       with:
         name: built-uberjar
 
-    - name: Heroku login credentials
-      run: |
-        cat > ~/.netrc <<EOF
-          machine api.heroku.com
-            login $HEROKU_EMAIL
-            password $HEROKU_API_KEY
-          machine git.heroku.com
-            login $HEROKU_EMAIL
-            password $HEROKU_API_KEY
-        EOF
+    - uses: superfly/flyctl-actions/setup-flyctl@master
+    - run: flyctl deploy --remote-only
       env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-
-    - name: Heroku CLI Plugin for Java
-      run: heroku plugins:install java
-
-    - name: Heroku Deploy jar
-      run: heroku deploy:jar service.jar --app $HEROKU_APP_NAME --jdk 11
-      env:
-        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+        FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
