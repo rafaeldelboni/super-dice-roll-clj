@@ -139,12 +139,16 @@ jobs:
     needs: [run_tests, build_jar, update-discord-slash-commands, update-telegram-commands]
 
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
     - name: Download uberjar artifact
       uses: actions/download-artifact@v3
       with:
         name: built-uberjar
 
-    - uses: superfly/flyctl-actions/setup-flyctl@master
-    - run: flyctl deploy --remote-only
+    - name: Deploy on flyio
+      uses: superfly/flyctl-actions/setup-flyctl@master
+      run: flyctl deploy --remote-only
       env:
         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
