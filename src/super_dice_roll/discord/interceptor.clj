@@ -1,5 +1,5 @@
 (ns super-dice-roll.discord.interceptor
-  (:require [parenthesin.logs :as logs]
+  (:require [parenthesin.helpers.logs :as logs]
             [super-dice-roll.discord.security :as discord.security]))
 
 (defn try-verify-request

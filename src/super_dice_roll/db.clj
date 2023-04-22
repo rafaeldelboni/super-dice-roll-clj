@@ -1,7 +1,7 @@
 (ns super-dice-roll.db
   (:require [honey.sql :as sql]
             [honey.sql.helpers :as sql.helpers]
-            [parenthesin.components.database :as components.database]
+            [parenthesin.components.db.jdbc-hikari :as components.database]
             [schema.core :as s]
             [super-dice-roll.adapters :as base.adapters]
             [super-dice-roll.schemas.db :as schemas.db]

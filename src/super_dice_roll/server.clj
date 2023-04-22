@@ -1,12 +1,12 @@
 (ns super-dice-roll.server
   (:require [com.stuartsierra.component :as component]
-            [parenthesin.components.config :as config]
-            [parenthesin.components.database :as database]
-            [parenthesin.components.http :as http]
-            [parenthesin.components.router :as router]
-            [parenthesin.components.webserver :as webserver]
-            [parenthesin.logs :as logs]
-            [parenthesin.migrations :as migrations]
+            [parenthesin.components.config.aero :as config]
+            [parenthesin.components.db.jdbc-hikari :as database]
+            [parenthesin.components.http.clj-http :as http]
+            [parenthesin.components.server.reitit-pedestal-jetty :as webserver]
+            [parenthesin.helpers.logs :as logs]
+            [parenthesin.helpers.migrations :as migrations]
+            [super-dice-roll.components.router :as router]
             [super-dice-roll.routes :as routes])
   (:gen-class))
 
@@ -21,7 +21,7 @@
    :webserver (component/using (webserver/new-webserver) [:config :http :router :database])))
 
 (defn start-system! [system-map]
-  (logs/setup [["*" :info]] :auto)
+  (logs/setup :info :auto)
   (migrations/migrate (migrations/configuration-with-db))
   (->> system-map
        component/start

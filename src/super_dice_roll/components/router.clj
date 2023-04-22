@@ -1,7 +1,7 @@
-(ns parenthesin.components.router
+(ns super-dice-roll.components.router
   (:require [com.stuartsierra.component :as component]
             [muuntaja.core :as m]
-            [parenthesin.logs :as logs]
+            [parenthesin.helpers.logs :as logs]
             [reitit.coercion.schema :as reitit.schema]
             [reitit.dev.pretty :as pretty]
             [reitit.http :as http]

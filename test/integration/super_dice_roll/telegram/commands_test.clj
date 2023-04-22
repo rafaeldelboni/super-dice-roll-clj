@@ -1,19 +1,19 @@
 (ns integration.super-dice-roll.telegram.commands-test
   (:require [clojure.test :as clojure.test]
             [com.stuartsierra.component :as component]
-            [integration.parenthesin.util.http :as util.http]
-            [integration.parenthesin.util.webserver :as util.webserver]
             [integration.super-dice-roll.util :as util]
             [matcher-combinators.matchers :as matchers]
-            [parenthesin.components.config :as components.config]
-            [parenthesin.components.database :as components.database]
-            [parenthesin.components.http :as components.http]
-            [parenthesin.components.router :as components.router]
-            [parenthesin.components.webserver :as components.webserver]
+            [parenthesin.components.config.aero :as components.config]
+            [parenthesin.components.db.jdbc-hikari :as components.database]
+            [parenthesin.components.http.clj-http :as components.http]
+            [parenthesin.components.server.reitit-pedestal-jetty :as components.webserver]
+            [parenthesin.helpers.state-flow.http :as state-flow.http]
+            [parenthesin.helpers.state-flow.server.pedestal :as state-flow.server]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]
             [state-flow.assertions.matcher-combinators :refer [match?]]
             [state-flow.core :as state-flow :refer [flow]]
+            [super-dice-roll.components.router :as components.router]
             [super-dice-roll.messages :as messages]
             [super-dice-roll.routes :as routes]))
 
@@ -44,7 +44,7 @@
 
     (flow "should not error on nil"
       (match? (matchers/embeds {:status 200})
-              (util.webserver/request! {:method :post
+              (state-flow.server/request! {:method :post
                                         :uri    (str "/telegram/webhook/" telegram-bot-token)
                                         :body   {:update_id 987654321
                                                  :message {:date 1626904234
@@ -67,7 +67,7 @@
 
     (flow "should ignore any other text"
       (match? (matchers/embeds {:status 200})
-              (util.webserver/request! {:method :post
+              (state-flow.server/request! {:method :post
                                         :uri    (str "/telegram/webhook/" telegram-bot-token)
                                         :body   {:update_id 987654321
                                                  :message {:date 1626904234
@@ -90,14 +90,14 @@
 
     (flow "should NOT send message to telegram api"
       (match? 0
-              (util.http/http-out-requests
+              (state-flow.http/http-out-requests
                (fn [requests]
                  (->> requests
                       count)))))
 
     (flow "should be able to send a /roll command"
       (match? (matchers/embeds {:status 200})
-              (util.webserver/request! {:method :post
+              (state-flow.server/request! {:method :post
                                         :uri    (str "/telegram/webhook/" telegram-bot-token)
                                         :body   {:update_id 987654321
                                                  :message {:date 1626904234
@@ -122,7 +122,7 @@
       (match? {:chat_id 111
                :text (matchers/regex #"<i>schuazeneger rolled 4d6-1</i>\n<pre>\[")
                :parse_mode "HTML"}
-              (util.http/http-out-requests
+              (state-flow.http/http-out-requests
                (fn [requests]
                  (->> requests
                       (filter #(= (:url %) (str "https://api.telegram.org/bot" telegram-bot-token "/sendMessage")))
@@ -131,7 +131,7 @@
 
     (flow "should be able to send a /history command"
       (match? (matchers/embeds {:status 200})
-              (util.webserver/request! {:method :post
+              (state-flow.server/request! {:method :post
                                         :uri    (str "/telegram/webhook/" telegram-bot-token)
                                         :body   {:update_id 987654321
                                                  :message {:date 1626904234
@@ -156,7 +156,7 @@
       (match? {:chat_id 222
                :text (matchers/regex #"\<i>schuazeneger history</i>\n")
                :parse_mode "HTML"}
-              (util.http/http-out-requests
+              (state-flow.http/http-out-requests
                (fn [requests]
                  (->> requests
                       (filter #(= (get-in % [:query-params :chat_id]) 222))
@@ -167,7 +167,7 @@
 
     (flow "should be able to send a /help command"
       (match? (matchers/embeds {:status 200})
-              (util.webserver/request! {:method :post
+              (state-flow.server/request! {:method :post
                                         :uri    (str "/telegram/webhook/" telegram-bot-token)
                                         :body   {:update_id 987654321
                                                  :message {:date 1626904234
@@ -192,7 +192,7 @@
       (match? {:chat_id 333
                :text (messages/help :telegram)
                :parse_mode "HTML"}
-              (util.http/http-out-requests
+              (state-flow.http/http-out-requests
                (fn [requests]
                  (->> requests
                       (filter #(= (get-in % [:query-params :chat_id]) 333))

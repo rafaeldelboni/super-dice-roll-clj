@@ -1,18 +1,18 @@
 (ns integration.super-dice-roll.telegram.security-test
   (:require [clojure.test :as clojure.test]
             [com.stuartsierra.component :as component]
-            [integration.parenthesin.util.webserver :as util.webserver]
             [integration.super-dice-roll.util :as util]
             [matcher-combinators.matchers :as matchers]
-            [parenthesin.components.config :as components.config]
-            [parenthesin.components.database :as components.database]
-            [parenthesin.components.http :as components.http]
-            [parenthesin.components.router :as components.router]
-            [parenthesin.components.webserver :as components.webserver]
+            [parenthesin.components.config.aero :as components.config]
+            [parenthesin.components.db.jdbc-hikari :as components.database]
+            [parenthesin.components.http.clj-http :as components.http]
+            [parenthesin.components.server.reitit-pedestal-jetty :as components.webserver]
+            [parenthesin.helpers.state-flow.server.pedestal :as state-flow.server]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]
             [state-flow.assertions.matcher-combinators :refer [match?]]
             [state-flow.core :as state-flow :refer [flow]]
+            [super-dice-roll.components.router :as components.router]
             [super-dice-roll.routes :as routes]))
 
 (clojure.test/use-fixtures :once schema.test/validate-schemas)
@@ -60,13 +60,13 @@
 
     (flow "should be able to send a signed request"
       (match? (matchers/embeds {:status 200})
-              (util.webserver/request! {:method :post
+              (state-flow.server/request! {:method :post
                                         :uri    (str "/telegram/webhook/" telegram-bot-token)
                                         :body   request-body})))
 
     (flow "should not be able to send a unsigned request"
       (match? (matchers/embeds {:status 401
                                 :body  "invalid bot-token sent"})
-              (util.webserver/request! {:method :post
+              (state-flow.server/request! {:method :post
                                         :uri    "/telegram/webhook/very-wrong-token"
                                         :body   request-body})))))
