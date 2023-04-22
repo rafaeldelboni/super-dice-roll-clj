@@ -15,9 +15,10 @@
 # Developers
 
 ## About this code
- - **parenthesin**: Helpers and wrappers to give a foundation to create new services in clojure,
-you can find components for database, http, webserver and tools for db migrations.
  - **super-dice-roll**: Bot code for interaction via webhooks and rolling dices.
+
+- [parenthesin/components](https://github.com/parenthesin/components): Helpers and component wrappers to give a foundation to create new services in clojure,
+you can find components for database, http, webserver and tools for db migrations.
 
 ## Available Endpoints
 

@@ -3,8 +3,8 @@
             [clojure.string :as str]
             [clojure.test.check.generators :as generators]
             [com.stuartsierra.component :as component]
-            [parenthesin.components.database :as components.database]
-            [parenthesin.components.http :as components.http]
+            [parenthesin.components.db.jdbc-hikari :as components.database]
+            [parenthesin.components.http.clj-http :as components.http]
             [schema.core :as s]))
 
 (def HttpComponent (s/protocol components.http/HttpProvider))

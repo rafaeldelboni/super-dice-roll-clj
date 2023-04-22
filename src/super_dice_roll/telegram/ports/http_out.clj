@@ -1,6 +1,6 @@
 (ns super-dice-roll.telegram.ports.http-out
-  (:require [parenthesin.components.http :as components.http]
-            [parenthesin.logs :as logs]
+  (:require [parenthesin.components.http.clj-http :as components.http]
+            [parenthesin.helpers.logs :as logs]
             [schema.core :as s]
             [super-dice-roll.schemas.types :as schemas.types]))
 
