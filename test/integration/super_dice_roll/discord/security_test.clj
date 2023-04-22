@@ -53,11 +53,11 @@
       (match? (matchers/embeds {:status 401
                                 :body  "invalid request signature"})
               (state-flow.server/request! {:method :post
-                                        :uri    "/discord/webhook"
-                                        :headers {"x-signature-ed25519" "x"
-                                                  "x-signature-timestamp" "x"}
-                                        :body   {:id "discord-id-2"
-                                                 :application_id "discord-app-id-2"
-                                                 :type 1
-                                                 :token "discord-token-2"
-                                                 :version 1}})))))
+                                           :uri    "/discord/webhook"
+                                           :headers {"x-signature-ed25519" "x"
+                                                     "x-signature-timestamp" "x"}
+                                           :body   {:id "discord-id-2"
+                                                    :application_id "discord-app-id-2"
+                                                    :type 1
+                                                    :token "discord-token-2"
+                                                    :version 1}})))))

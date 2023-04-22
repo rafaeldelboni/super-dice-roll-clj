@@ -61,12 +61,12 @@
     (flow "should be able to send a signed request"
       (match? (matchers/embeds {:status 200})
               (state-flow.server/request! {:method :post
-                                        :uri    (str "/telegram/webhook/" telegram-bot-token)
-                                        :body   request-body})))
+                                           :uri    (str "/telegram/webhook/" telegram-bot-token)
+                                           :body   request-body})))
 
     (flow "should not be able to send a unsigned request"
       (match? (matchers/embeds {:status 401
                                 :body  "invalid bot-token sent"})
               (state-flow.server/request! {:method :post
-                                        :uri    "/telegram/webhook/very-wrong-token"
-                                        :body   request-body})))))
+                                           :uri    "/telegram/webhook/very-wrong-token"
+                                           :body   request-body})))))
