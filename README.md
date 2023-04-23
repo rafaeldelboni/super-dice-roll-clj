@@ -53,10 +53,10 @@ You can start a repl open and evaluate the file `src/super_dice_roll/server.clj`
 ### Uberjar
 You can generate an uberjar and execute it via java in the terminal:
 ```bash
-# genarate a service.jar in the root of this repository.
-clj -X:uberjar
+# genarate a target/service.jar
+clj -T:build uberjar
 # execute it via java
-java -jar service.jar
+java -jar target/service.jar
 ```
 
 ## Repl
@@ -139,7 +139,6 @@ See [Migratus Usage](https://github.com/yogthos/migratus#usage) for documentatio
 ## Other iterations
 - https://github.com/rafaeldelboni/super-dice-roll
 - https://github.com/rafaeldelboni/node-super-dice-roll
-
 
 ## License
 This is free and unencumbered software released into the public domain.  
