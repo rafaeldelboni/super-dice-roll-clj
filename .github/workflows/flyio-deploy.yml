@@ -71,7 +71,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Generate uberjar
-        run: clojure -X:uberjar
+        run: clojure -T:build uberjar
 
       - name: Upload uberjar artifact
         uses: actions/upload-artifact@v3
