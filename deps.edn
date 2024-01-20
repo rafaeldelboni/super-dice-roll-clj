@@ -10,7 +10,7 @@
         metosin/reitit-pedestal {:mvn/version "0.6.0"}
         metosin/reitit-swagger {:mvn/version "0.6.0"}
         metosin/reitit-swagger-ui {:mvn/version "0.6.0"}
-        org.bouncycastle/bcprov-jdk15on {:mvn/version "1.70"}
+        org.bouncycastle/bcprov-jdk18on {:mvn/version "1.77"}
         org.postgresql/postgresql {:mvn/version "42.7.1"}
         prismatic/schema-generators {:mvn/version "0.1.5"}
         selmer/selmer {:mvn/version "1.12.59"}}
