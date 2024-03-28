@@ -15,7 +15,8 @@
   {:config (s/protocol component/Lifecycle)
    :http HttpComponent
    :router (s/protocol component/Lifecycle)
-   :database DatabaseComponent})
+   :database DatabaseComponent
+   s/Keyword s/Any})
 
 (def json-array-int?
   (fn [field]
