@@ -1,38 +1,38 @@
 {:paths ["src" "resources"]
 
- :deps {org.clojure/clojure {:mvn/version "1.11.1"}
-        com.github.parenthesin/components {:mvn/version "0.2.4"
+ :deps {org.clojure/clojure {:mvn/version "1.11.2"}
+        com.github.parenthesin/components {:mvn/version "0.2.5"
                                            :exclusions  [metosin/malli]}
         aero/aero {:mvn/version "1.1.6"}
-        com.github.seancorfield/honeysql {:mvn/version "2.5.1103"}
-        metosin/muuntaja {:mvn/version "0.6.8"}
+        com.github.seancorfield/honeysql {:mvn/version "2.6.1126"}
+        metosin/muuntaja {:mvn/version "0.6.10"}
         metosin/reitit {:mvn/version "0.6.0"}
         metosin/reitit-pedestal {:mvn/version "0.6.0"}
         metosin/reitit-swagger {:mvn/version "0.6.0"}
         metosin/reitit-swagger-ui {:mvn/version "0.6.0"}
 
         org.bouncycastle/bcprov-jdk18on {:mvn/version "1.77"}
-        org.postgresql/postgresql {:mvn/version "42.7.1"}
+        org.postgresql/postgresql {:mvn/version "42.7.3"}
         prismatic/schema-generators {:mvn/version "0.1.5"}
         selmer/selmer {:mvn/version "1.12.59"}}
 
  :aliases
  {:test {:extra-paths ["test"]
          :extra-deps  {org.clojars.bigsy/pg-embedded-clj {:mvn/version "1.0.1"}
-                       lambdaisland/kaocha {:mvn/version "1.87.1366"}
+                       lambdaisland/kaocha {:mvn/version "1.88.1376"}
                        lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}
                        nubank/matcher-combinators {:mvn/version "3.9.1"}
-                       nubank/state-flow {:mvn/version "5.14.5"}}
+                       nubank/state-flow {:mvn/version "5.15.0"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
-  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2024.02.01-11.01.59"}}
+  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2024.03.13-13.11.00"}}
                 :main-opts ["-m" "clojure-lsp.main"]}
 
-  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.45.0"}}
+  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.47.1"}}
           :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
 
   :migratus {:main-opts ["-m" "parenthesin.helpers.migrations"]}
 
-  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}}
+  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.0"}}
           :ns-default build
           :exec-args {:uber-file "target/service.jar"}}}}
