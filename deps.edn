@@ -1,7 +1,7 @@
 {:paths ["src" "resources"]
 
  :deps {org.clojure/clojure {:mvn/version "1.11.3"}
-        com.github.parenthesin/components {:mvn/version "0.2.5"
+        com.github.parenthesin/components {:mvn/version "0.3.0"
                                            :exclusions  [metosin/malli]}
         aero/aero {:mvn/version "1.1.6"}
         com.github.seancorfield/honeysql {:mvn/version "2.6.1147"}
