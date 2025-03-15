@@ -7,6 +7,7 @@
             [pg-embedded-clj.core :as pg-emb]
             [state-flow.api :as state-flow.api]
             [state-flow.core :as state-flow :refer [flow]]
+            [super-dice-roll.adapters.bytes :as adapters.bytes]
             [super-dice-roll.discord.security :as discord.security]))
 
 (defn signed-request!
@@ -17,7 +18,7 @@
            signature (->> (str timestamp (json/encode body))
                           .getBytes
                           (discord.security/sign signer)
-                          discord.security/bytes->hex)]]
+                          adapters.bytes/bytes->hex)]]
     (state-flow.server/request! (-> request
                                     (assoc-in [:headers "x-signature-ed25519"] signature)
                                     (assoc-in [:headers "x-signature-timestamp"] timestamp)))))
