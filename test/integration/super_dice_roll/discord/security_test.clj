@@ -12,6 +12,7 @@
             [state-flow.api :refer [defflow]]
             [state-flow.assertions.matcher-combinators :refer [match?]]
             [state-flow.core :as state-flow :refer [flow]]
+            [super-dice-roll.adapters.bytes :as adapters.bytes]
             [super-dice-roll.components.router :as components.router]
             [super-dice-roll.discord.security :as discord.security]
             [super-dice-roll.routes :as routes]))
@@ -23,7 +24,7 @@
     (component/start-system
      (component/system-map
       :config (components.config/new-config
-               {:discord {:app-public-key (discord.security/bytes->hex (.getEncoded (:public key-pair)))
+               {:discord {:app-public-key (adapters.bytes/bytes->hex (.getEncoded (:public key-pair)))
                           :app-test-signer (discord.security/new-signer (:private key-pair))}})
       :http (components.http/new-http-mock {})
       :router (components.router/new-router routes/routes)
