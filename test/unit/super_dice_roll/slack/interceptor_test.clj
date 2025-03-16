@@ -25,20 +25,20 @@
       (with-redefs [slack.interceptor/now-secs (fn [] timestamp+one-min)]
         (is (match? {:response {:status 200}}
                     (interceptor-fn (build-ctx slack-signing-secret
-                                               timestamp
+                                               (str timestamp)
                                                body
                                                signature)))))
 
       (with-redefs [slack.interceptor/now-secs (fn [] timestamp+six-mins)]
         (is (match? {:response {:status 401}}
                     (interceptor-fn (build-ctx slack-signing-secret
-                                               timestamp
+                                               (str timestamp)
                                                body
                                                signature)))))
 
       (with-redefs [slack.interceptor/now-secs (fn [] timestamp+one-min)]
         (is (match? {:response {:status 401}}
                     (interceptor-fn (build-ctx slack-signing-secret
-                                               timestamp
+                                               (str timestamp)
                                                (str body "hackedbody")
                                                signature))))))))

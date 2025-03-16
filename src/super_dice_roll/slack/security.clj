@@ -29,9 +29,10 @@
   signature and timestamp headers.
   return boolean with verification.
   https://api.slack.com/authentication/verifying-requests-from-slack"
-  [^String signing-secret ^Number now ^Number timestamp ^String body ^String signature]
-  (let [basestring (str/join separator [version timestamp body])
+  [^String signing-secret ^Number now ^String timestamp ^String body ^String signature]
+  (let [timestamp-number (or (parse-long timestamp) 0)
+        basestring (str/join separator [version timestamp body])
         hash (adapters.bytes/bytes->hex (hash-hmac-sha256 basestring signing-secret))]
     (and
-     (> (* 60 5) (- now timestamp))
+     (> (* 60 5) (- now timestamp-number))
      (= (str version "=" hash) signature))))

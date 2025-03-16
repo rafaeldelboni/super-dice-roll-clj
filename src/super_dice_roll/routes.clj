@@ -4,6 +4,9 @@
             [super-dice-roll.discord.interceptor :as discord.interceptor]
             [super-dice-roll.discord.ports.http-in :as discord.ports.http-in]
             [super-dice-roll.discord.schemas.http-in :as discord.schemas.http-in]
+            [super-dice-roll.slack.interceptor :as slack.interceptor]
+            [super-dice-roll.slack.ports.http-in :as slack.ports.http-in]
+            [super-dice-roll.slack.schemas.http-in :as slack.schemas.http-in]
             [super-dice-roll.telegram.interceptor :as telegram.interceptor]
             [super-dice-roll.telegram.ports.http-in :as telegram.ports.http-in]
             [super-dice-roll.telegram.schemas.http-in :as telegram.schemas.http-in]))
@@ -29,6 +32,22 @@
                          401 {:body s/Str}
                          500 {:body s/Str}}
              :handler discord.ports.http-in/process-interaction!}}]]
+
+   ["/slack"
+    {:swagger {:tags ["slack"]}
+     :interceptors [(slack.interceptor/authentication-interceptor)]
+     :parameters {:header {:x-slack-signature s/Str
+                           :x-slack-request-timestamp s/Str}}}
+
+    ["/slash/:command"
+     {:post {:summary "Slack we'll send a payload to when the command is invoked."
+             :parameters {:path {:command s/Str}
+                          :body slack.schemas.http-in/Command}
+             :responses {200 {:body s/Any}
+                         400 {:body s/Str}
+                         401 {:body s/Str}
+                         500 {:body s/Str}}
+             :handler slack.ports.http-in/process-command!}}]]
 
    ["/telegram"
     {:swagger {:tags ["telegram"]}

@@ -17,18 +17,18 @@
       (is (match? true
                   (slack.security/verify-request slack-signing-secret
                                                  timestamp+one-min
-                                                 timestamp
+                                                 (str timestamp)
                                                  body
                                                  signature)))
       (is (match? false
                   (slack.security/verify-request slack-signing-secret
                                                  timestamp+six-mins
-                                                 timestamp
+                                                 (str timestamp)
                                                  body
                                                  signature)))
       (is (match? false
                   (slack.security/verify-request slack-signing-secret
                                                  timestamp+one-min
-                                                 timestamp
+                                                 (str timestamp)
                                                  (str body ".hacks")
                                                  signature))))))
