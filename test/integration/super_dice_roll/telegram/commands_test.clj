@@ -35,7 +35,7 @@
                                 [:config :http :router :database]))))
 
 (defflow
-  flow-integration-wallet-test
+  flow-integration-telegram-commands-test
   {:init (util/start-system! create-and-start-components!)
    :cleanup util/stop-system!
    :fail-fast? true}

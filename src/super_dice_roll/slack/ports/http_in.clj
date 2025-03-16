@@ -5,6 +5,7 @@
             [super-dice-roll.messages :as messages]
             [super-dice-roll.schemas.types :as schemas.types]
             [super-dice-roll.slack.adapters :as slack.adapters]
+            [super-dice-roll.slack.ports.http-out :as slack.ports.http-out]
             [super-dice-roll.slack.schemas.http-in :as slack.schemas.http-in]))
 
 (s/defn ^:private command->message
@@ -34,6 +35,12 @@
              {})}))
 
 (defn process-oauth!
-  [_]
-  {:status 200
-   :body "<html><body><h1>Success!</h1></body></html>"})
+  [{{query :query} :parameters
+    components :components}]
+  (let [{:keys [code]} query
+        {:keys [ok error]} (:body (slack.ports.http-out/exchange-token code components))]
+    {:status 200
+     :headers {"Content-Type" "text/html"}
+     :body (if ok
+             "<html><body><h1>Success!</h1></body></html>"
+             (str "<html><body><h1>Error!</h1><pre>" error "</pre></body></html>"))}))
