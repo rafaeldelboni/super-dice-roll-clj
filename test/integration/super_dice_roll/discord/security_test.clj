@@ -42,13 +42,13 @@
     (flow "should be able to send a signed request"
       (match? (matchers/embeds {:status 200
                                 :body  {:type 1}})
-              (util/signed-request! {:method :post
-                                     :uri    "/discord/webhook"
-                                     :body   {:id "discord-id-1"
-                                              :application_id "discord-app-id-1"
-                                              :type 1
-                                              :token "discord-token-1"
-                                              :version 1}})))
+              (util/discord-signed-request! {:method :post
+                                             :uri    "/discord/webhook"
+                                             :body   {:id "discord-id-1"
+                                                      :application_id "discord-app-id-1"
+                                                      :type 1
+                                                      :token "discord-token-1"
+                                                      :version 1}})))
 
     (flow "should not be able to send a unsigned request discord"
       (match? (matchers/embeds {:status 401

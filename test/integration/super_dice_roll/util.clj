@@ -10,9 +10,9 @@
             [super-dice-roll.adapters.bytes :as adapters.bytes]
             [super-dice-roll.discord.security :as discord.security]))
 
-(defn signed-request!
+(defn discord-signed-request!
   [{:keys [body] :as request}]
-  (flow "makes http request"
+  (flow "makes discord signed http request"
     [signer (state-flow.api/get-state (comp :app-test-signer :discord :config :config))
      :let [timestamp (str (quot (System/currentTimeMillis) 1000))
            signature (->> (str timestamp (json/encode body))

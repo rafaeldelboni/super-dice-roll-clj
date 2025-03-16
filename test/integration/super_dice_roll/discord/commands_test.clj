@@ -44,39 +44,39 @@
       (match? (matchers/embeds {:status 200
                                 :body  {:type 4
                                         :data {:content (matchers/regex #"papoulos rolled 4d6-1")}}})
-              (util/signed-request! {:method :post
-                                     :uri    "/discord/webhook"
-                                     :body   {:id "discord-id-1"
-                                              :application_id "discord-app-id-1"
-                                              :token "discord-token-1"
-                                              :version 1
-                                              :type 2
-                                              :member {:user {:id "discord-user-id-1"
-                                                              :username "papoulos"}}
-                                              :data {:id "discord-data-id-1"
-                                                     :type 1
-                                                     :name "roll"
-                                                     :options [{:id "discord-data-options-1"
-                                                                :name "command"
-                                                                :type 3
-                                                                :value "4d6-1"}]}}})))
+              (util/discord-signed-request! {:method :post
+                                             :uri    "/discord/webhook"
+                                             :body   {:id "discord-id-1"
+                                                      :application_id "discord-app-id-1"
+                                                      :token "discord-token-1"
+                                                      :version 1
+                                                      :type 2
+                                                      :member {:user {:id "discord-user-id-1"
+                                                                      :username "papoulos"}}
+                                                      :data {:id "discord-data-id-1"
+                                                             :type 1
+                                                             :name "roll"
+                                                             :options [{:id "discord-data-options-1"
+                                                                        :name "command"
+                                                                        :type 3
+                                                                        :value "4d6-1"}]}}})))
 
     (flow "should be able to send a /history command"
       (match? (matchers/embeds {:status 200
                                 :body  {:type 4
                                         :data {:content (matchers/regex #"\*papoulos history\*\n`4d6-1: \[")}}})
-              (util/signed-request! {:method :post
-                                     :uri    "/discord/webhook"
-                                     :body   {:id "discord-id-1"
-                                              :application_id "discord-app-id-1"
-                                              :token "discord-token-1"
-                                              :version 1
-                                              :type 2
-                                              :member {:user {:id "discord-user-id-1"
-                                                              :username "papoulos"}}
-                                              :data {:id "discord-data-id-1"
-                                                     :type 1
-                                                     :name "history"}}})
+              (util/discord-signed-request! {:method :post
+                                             :uri    "/discord/webhook"
+                                             :body   {:id "discord-id-1"
+                                                      :application_id "discord-app-id-1"
+                                                      :token "discord-token-1"
+                                                      :version 1
+                                                      :type 2
+                                                      :member {:user {:id "discord-user-id-1"
+                                                                      :username "papoulos"}}
+                                                      :data {:id "discord-data-id-1"
+                                                             :type 1
+                                                             :name "history"}}})
               {:times-to-try 5
                :sleep-time   200}))
 
@@ -84,15 +84,15 @@
       (match? (matchers/embeds {:status 200
                                 :body  {:type 4
                                         :data {:content (messages/help :discord)}}})
-              (util/signed-request! {:method :post
-                                     :uri    "/discord/webhook"
-                                     :body   {:id "discord-id-1"
-                                              :application_id "discord-app-id-1"
-                                              :token "discord-token-1"
-                                              :version 1
-                                              :type 2
-                                              :member {:user {:id "discord-user-id-1"
-                                                              :username "papoulos"}}
-                                              :data {:id "discord-data-id-1"
-                                                     :type 1
-                                                     :name "help"}}})))))
+              (util/discord-signed-request! {:method :post
+                                             :uri    "/discord/webhook"
+                                             :body   {:id "discord-id-1"
+                                                      :application_id "discord-app-id-1"
+                                                      :token "discord-token-1"
+                                                      :version 1
+                                                      :type 2
+                                                      :member {:user {:id "discord-user-id-1"
+                                                                      :username "papoulos"}}
+                                                      :data {:id "discord-data-id-1"
+                                                             :type 1
+                                                             :name "help"}}})))))
