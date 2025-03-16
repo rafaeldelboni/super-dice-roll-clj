@@ -16,8 +16,8 @@
         :form-params {:client_id client-id
                       :client_secret client-secret
                       :code code}
-        :accept :json
-        :method :get})
+        :method :post
+        :as :json})
       (catch Exception e
         (logs/log :error :http-out-message-response e)
         {:body {:ok false :error (ex-message e)}}))))
