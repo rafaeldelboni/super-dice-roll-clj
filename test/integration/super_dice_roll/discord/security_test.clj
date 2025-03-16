@@ -7,7 +7,6 @@
             [parenthesin.components.db.jdbc-hikari :as components.database]
             [parenthesin.components.http.clj-http :as components.http]
             [parenthesin.components.server.reitit-pedestal-jetty :as components.webserver]
-            [parenthesin.helpers.state-flow.server.pedestal :as state-flow.server]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]
             [state-flow.assertions.matcher-combinators :refer [match?]]
@@ -53,12 +52,12 @@
     (flow "should not be able to send a unsigned request discord"
       (match? (matchers/embeds {:status 401
                                 :body  "invalid request signature"})
-              (state-flow.server/request! {:method :post
-                                           :uri    "/discord/webhook"
-                                           :headers {"x-signature-ed25519" "x"
-                                                     "x-signature-timestamp" "x"}
-                                           :body   {:id "discord-id-2"
-                                                    :application_id "discord-app-id-2"
-                                                    :type 1
-                                                    :token "discord-token-2"
-                                                    :version 1}})))))
+              (util/request! {:method :post
+                              :uri    "/discord/webhook"
+                              :headers {"x-signature-ed25519" "x"
+                                        "x-signature-timestamp" "x"}
+                              :body   {:id "discord-id-2"
+                                       :application_id "discord-app-id-2"
+                                       :type 1
+                                       :token "discord-token-2"
+                                       :version 1}})))))

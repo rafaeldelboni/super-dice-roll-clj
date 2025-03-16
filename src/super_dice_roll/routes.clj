@@ -42,7 +42,8 @@
     ["/slash/:command"
      {:post {:summary "Slack we'll send a payload to when the command is invoked."
              :parameters {:path {:command s/Str}
-                          :body slack.schemas.http-in/Command}
+                          :form (s/maybe slack.schemas.http-in/Command)
+                          :body (s/maybe slack.schemas.http-in/Command)}
              :responses {200 {:body s/Any}
                          400 {:body s/Str}
                          401 {:body s/Str}

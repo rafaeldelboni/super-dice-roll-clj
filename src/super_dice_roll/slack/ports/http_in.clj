@@ -23,9 +23,10 @@
     nil))
 
 (defn process-command!
-  [{{body :body} :parameters
+  [{{body :body form :form} :parameters
     components :components}]
-  (let [message (command->message body components)]
+  (let [payload (or form body)
+        message (command->message payload components)]
     {:status 200
      :body (if message
              {:response_type "in_channel"
