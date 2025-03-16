@@ -52,6 +52,7 @@
 
     ["/oauth"
      {:get {:summary "Slack oauth redirect url"
+            :parameters {:query {:code s/Str}}
             :responses {200 {:body s/Any}
                         400 {:body s/Str}
                         401 {:body s/Str}

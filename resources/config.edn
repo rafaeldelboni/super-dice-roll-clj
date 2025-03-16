@@ -1,6 +1,8 @@
 {:webserver/port #long #or [#env PORT 3001]
  :discord {:app-public-key #or [#env DISCORD_PUBLIC_KEY ""]}
- :slack {:signing-secret #or [#env SLACK_SIGNING_SECRET ""]}
+ :slack {:signing-secret #or [#env SLACK_SIGNING_SECRET ""]
+         :client-id #or [#env SLACK_CLIENT_ID ""]
+         :client-secret #or [#env SLACK_CLIENT_SECRET ""]}
  :telegram {:bot-token #or [#env TELEGRAM_BOT_TOKEN ""]}
  :database {:dbtype "postgres"
             :dbname #or [#env DB-NAME #env DB_NAME "postgres"]

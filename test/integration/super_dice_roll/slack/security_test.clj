@@ -44,7 +44,7 @@
                    :api_app_id "A123456"})
 
 (defflow
-  flow-integration-wallet-test
+  flow-integration-slack-security-test
   {:init (util/start-system! create-and-start-components!)
    :cleanup util/stop-system!
    :fail-fast? true}
