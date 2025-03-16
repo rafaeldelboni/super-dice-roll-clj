@@ -56,6 +56,9 @@
        :discord (str "*{{username}} rolled {{command}}*\n"
                      "`[{{each}}]{{modifier}}`\n"
                      "**total: {{total}}**\n")
+       :slack (str "*{{username}} rolled {{command}}*\n"
+                   "`[{{each}}]{{modifier}}`\n"
+                   "**total: {{total}}**\n")
        :telegram (str "<i>{{username}} rolled {{command}}</i>\n"
                       "<pre>[{{each}}]{{modifier}}</pre>\n"
                       "<b>total: {{total}}</b>\n"))
@@ -72,6 +75,8 @@
      (case channel
        :discord (str "{{username}} the command *{{command}}* is invalid\n"
                      "{{help|safe}}")
+       :slack (str "{{username}} the command *{{command}}* is invalid\n"
+                   "{{help|safe}}")
        :telegram (str "{{username}} the command <i>{{command}}</i> is invalid\n"
                       "{{help|safe}}"))
      {:username (->name username nick)
@@ -85,6 +90,7 @@
     (selmer/render
      (case channel
        :discord "`{{command}}: [{{each}}]{{modifier}} = {{total}}`\n"
+       :slack "`{{command}}: [{{each}}]{{modifier}} = {{total}}`\n"
        :telegram "<pre>{{command}}: [{{each}}]{{modifier}} = {{total}}</pre>\n")
      {:command command
       :each (string/join "," each)
@@ -98,6 +104,8 @@
      (case channel
        :discord (str "*{{username}} history*\n"
                      "{{history|safe}}")
+       :slack (str "*{{username}} history*\n"
+                   "{{history|safe}}")
        :telegram (str "<i>{{username}} history</i>\n"
                       "{{history|safe}}"))
      {:username (->name username nick)
