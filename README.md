@@ -1,8 +1,9 @@
 # Bot: Super Dice Roll
 
-**Discord** and **Telegram** bot that roll dices using using commands like `/roll 4d6+4`.
+**Discord**, **Slack** and **Telegram** bot that roll dices using using commands like `/roll 4d6+4`.
 
 [![discord-super-dice-roll](https://img.shields.io/badge/Discord-Add%20To%20Your%20Server-blueviolet?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/api/oauth2/authorize?client_id=861964097700757534&permissions=2148005952&scope=bot%20applications.commands)
+[![slack-super-dice-roll](https://img.shields.io/badge/Slack-Add%20To%20Your%20Server-2EB67D?style=for-the-badge&logo=slack&logoColor=white)](https://slack.com/oauth/v2/authorize?client_id=1162891810226.8599173193665&scope=commands&user_scope=)
 [![telegram-super-dice-roll](https://img.shields.io/badge/Telegram-Add%20To%20Your%20Group-blue?style=for-the-badge&logo=telegram&logoColor=white)](https://telegram.me/superdiceroll_bot)
 
 ## Usage
@@ -25,6 +26,7 @@ you can find components for database, http, webserver and tools for db migration
 Verb | URL                           | Description
 -----| ----------------------------- | ------------------------------------------------
 POST | /discord/webhook              | Receives Discord's [interaction object](https://discord.com/developers/docs/interactions/slash-commands#interaction-object)
+POST | /slack/slash/{command}        | Receives Slack's [slash command object](https://api.slack.com/interactivity/slash-commands)
 POST | /telegram/webhook/{bot-token} | Receives Telegram's [update object](https://core.telegram.org/bots/api#update)
 
 ## Configure the config.edn 
