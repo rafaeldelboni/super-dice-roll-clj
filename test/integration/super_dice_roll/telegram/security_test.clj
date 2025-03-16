@@ -7,7 +7,6 @@
             [parenthesin.components.db.jdbc-hikari :as components.database]
             [parenthesin.components.http.clj-http :as components.http]
             [parenthesin.components.server.reitit-pedestal-jetty :as components.webserver]
-            [parenthesin.helpers.state-flow.server.pedestal :as state-flow.server]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]
             [state-flow.assertions.matcher-combinators :refer [match?]]
@@ -60,13 +59,13 @@
 
     (flow "should be able to send a signed request"
       (match? (matchers/embeds {:status 200})
-              (state-flow.server/request! {:method :post
-                                           :uri    (str "/telegram/webhook/" telegram-bot-token)
-                                           :body   request-body})))
+              (util/request! {:method :post
+                              :uri    (str "/telegram/webhook/" telegram-bot-token)
+                              :body   request-body})))
 
     (flow "should not be able to send a unsigned request"
       (match? (matchers/embeds {:status 401
                                 :body  "invalid bot-token sent"})
-              (state-flow.server/request! {:method :post
-                                           :uri    "/telegram/webhook/very-wrong-token"
-                                           :body   request-body})))))
+              (util/request! {:method :post
+                              :uri    "/telegram/webhook/very-wrong-token"
+                              :body   request-body})))))
