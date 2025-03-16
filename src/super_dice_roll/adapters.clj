@@ -56,9 +56,9 @@
        :discord (str "*{{username}} rolled {{command}}*\n"
                      "`[{{each}}]{{modifier}}`\n"
                      "**total: {{total}}**\n")
-       :slack (str "*{{username}} rolled {{command}}*\n"
+       :slack (str "_{{username}} rolled {{command}}_\n"
                    "`[{{each}}]{{modifier}}`\n"
-                   "**total: {{total}}**\n")
+                   "*total: {{total}}*\n")
        :telegram (str "<i>{{username}} rolled {{command}}</i>\n"
                       "<pre>[{{each}}]{{modifier}}</pre>\n"
                       "<b>total: {{total}}</b>\n"))
@@ -104,7 +104,7 @@
      (case channel
        :discord (str "*{{username}} history*\n"
                      "{{history|safe}}")
-       :slack (str "*{{username}} history*\n"
+       :slack (str "_{{username}} history_\n"
                    "{{history|safe}}")
        :telegram (str "<i>{{username}} history</i>\n"
                       "{{history|safe}}"))

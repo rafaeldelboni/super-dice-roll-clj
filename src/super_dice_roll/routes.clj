@@ -48,7 +48,15 @@
                          400 {:body s/Str}
                          401 {:body s/Str}
                          500 {:body s/Str}}
-             :handler slack.ports.http-in/process-command!}}]]
+             :handler slack.ports.http-in/process-command!}}]
+
+    ["/oauth"
+     {:get {:summary "Slack oauth redirect url"
+            :responses {200 {:body s/Any}
+                        400 {:body s/Str}
+                        401 {:body s/Str}
+                        500 {:body s/Str}}
+            :handler slack.ports.http-in/process-oauth!}}]]
 
    ["/telegram"
     {:swagger {:tags ["telegram"]}

@@ -1,10 +1,18 @@
 display_information:
   name: Super Dice Roll
-settings:
-  org_deploy_enabled: false
-  socket_mode_enabled: false
-  is_hosted: false
-  token_rotation_enabled: false
+  description: Bot that roll dices using using commands like `/roll 4d6+4`
+  background_color: "#000000"
+  long_description: "Bot that roll dices using using commands like /roll 4d6+4.\r
+
+    \r
+
+    Usage\r
+
+    \ - /help: Show available commands and how to use them.\r
+
+    \ - /roll: Roll dices. Example: /roll 3D6+3.\r
+
+    \ - /history: Lists your lasts 10 rolls with the results."
 features:
   app_home:
     home_tab_enabled: true
@@ -12,18 +20,28 @@ features:
     messages_tab_read_only_enabled: false
   bot_user:
     display_name: Super Dice Roll
+    always_online: true
   slash_commands:
     - command: /roll
+      url: https://super-dice-roll-clj.fly.dev/slack/slash/roll
       description: <NDM> N = Number of dices D = Type of dices (D6, D12, D20) M = Modifiers (+1, -3)
       usage_hint: /roll 3D6+3
-      url: https://super-dice-roll-clj.fly.dev/slack/slash/roll
+      should_escape: false
     - command: /history
+      url: https://super-dice-roll-clj.fly.dev/slack/slash/history
       description: Lists your lasts 10 rolls with the results.
-      url: https://super-dice-roll-clj.fly.dev/slack/slash/history
+      should_escape: false
     - command: /help
-      description: Get help about using this bot `help`.
       url: https://super-dice-roll-clj.fly.dev/slack/slash/history
+      description: Get help about using this bot `help`.
+      should_escape: false
 oauth_config:
+  redirect_urls:
+    - https://super-dice-roll-clj.fly.dev/slack/oauth
   scopes:
     bot:
       - commands
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
