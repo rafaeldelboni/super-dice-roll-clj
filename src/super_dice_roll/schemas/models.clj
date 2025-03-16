@@ -3,7 +3,8 @@
 
 (def ChannelDefinition
   {:discord  1
-   :telegram 2})
+   :telegram 2
+   :slack    3})
 (def Channel (apply s/enum (keys ChannelDefinition)))
 
 (s/defschema User
