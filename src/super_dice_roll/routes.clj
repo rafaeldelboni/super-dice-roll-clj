@@ -34,14 +34,14 @@
              :handler discord.ports.http-in/process-interaction!}}]]
 
    ["/slack"
-    {:swagger {:tags ["slack"]}
-     :interceptors [(slack.interceptor/authentication-interceptor)]
-     :parameters {:header {:x-slack-signature s/Str
-                           :x-slack-request-timestamp s/Str}}}
+    {:swagger {:tags ["slack"]}}
 
     ["/slash/:command"
-     {:post {:summary "Slack we'll send a payload to when the command is invoked."
-             :parameters {:path {:command s/Str}
+     {:interceptors [(slack.interceptor/authentication-interceptor)]
+      :post {:summary "Slack we'll send a payload to when the command is invoked."
+             :parameters {:header {:x-slack-signature s/Str
+                                   :x-slack-request-timestamp s/Str}
+                          :path {:command s/Str}
                           :form (s/maybe slack.schemas.http-in/Command)
                           :body (s/maybe slack.schemas.http-in/Command)}
              :responses {200 {:body s/Any}
