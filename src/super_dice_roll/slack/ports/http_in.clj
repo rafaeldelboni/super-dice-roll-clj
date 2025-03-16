@@ -32,3 +32,8 @@
              {:response_type "in_channel"
               :text message}
              {})}))
+
+(defn process-oauth!
+  [_]
+  {:status 200
+   :body "<html><body><h1>Success!</h1></body></html>"})
