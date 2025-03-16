@@ -50,7 +50,7 @@
     (flow "should be able to send a /history command"
       (match? (matchers/embeds {:status 200
                                 :body  {:response_type "in_channel"
-                                        :text (matchers/regex #"\*papoulos history\*\n`4d6-1: \[")}})
+                                        :text (matchers/regex #"\_papoulos history\_\n`4d6-1: \[")}})
               (util/slack-signed-request! {:method :post
                                            :uri    "/slack/slash/history"
                                            :body   {:user_id "U2147483697"
